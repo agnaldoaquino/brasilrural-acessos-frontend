@@ -9,36 +9,41 @@ function Login({ onLogin }) {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErro("");
+  e.preventDefault();
+  setErro("");
 
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/token`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({ email, password }),
-      });
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({ email, password }),
+    });
 
-      if (!response.ok) {
-        throw new Error("Usuário ou senha inválidos");
-      }
-
-      const data = await response.json();
-
-      onLogin({
-        token: data.access_token,
-        criaUsuario: data.cria_usuario,
-      });
-
-      // Redireciona para /acessos após login bem-sucedido
-      navigate("/acessos");
-
-    } catch (error) {
-      setErro(error.message);
+    if (!response.ok) {
+      throw new Error("Usuário ou senha inválidos");
     }
-  };
+
+    const data = await response.json();
+
+    // Atualiza o estado do app
+    onLogin({
+      token: data.access_token,
+      criaUsuario: data.cria_usuario,
+    });
+
+    // 👉 Salva o token no localStorage (para que Acessos.jsx consiga usar)
+    localStorage.setItem("token", data.access_token);
+    localStorage.setItem("cria_usuario", data.cria_usuario);
+
+    // Redireciona para /acessos após login bem-sucedido
+    navigate("/acessos");
+  } catch (error) {
+    setErro(error.message);
+  }
+};
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
