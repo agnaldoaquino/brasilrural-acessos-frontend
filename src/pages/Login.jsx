@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [erro, setErro] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +31,10 @@ function Login({ onLogin }) {
         token: data.access_token,
         criaUsuario: data.cria_usuario,
       });
+
+      // Redireciona para /acessos após login bem-sucedido
+      navigate("/acessos");
+
     } catch (error) {
       setErro(error.message);
     }
