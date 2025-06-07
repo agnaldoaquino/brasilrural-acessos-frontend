@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function Login({ onLogin }) {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [erro, setErro] = useState("");
 
@@ -15,7 +15,7 @@ function Login({ onLogin }) {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: new URLSearchParams({ username, password }),
+        body: new URLSearchParams({ email, password }),
       });
 
       if (!response.ok) {
@@ -46,9 +46,9 @@ function Login({ onLogin }) {
           <div>
             <label className="block text-sm font-medium text-gray-700">Email</label>
             <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Digite seu e-mail"
               className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-500"
               required
