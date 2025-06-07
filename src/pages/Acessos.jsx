@@ -9,6 +9,8 @@ function Acessos() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
+    console.log("Token atual:", token); // 👉 ADICIONADO PARA DEBUG
+
     if (!token) return;
 
     fetch(`${import.meta.env.VITE_API_URL}/acessos`, {
@@ -22,7 +24,10 @@ function Acessos() {
         }
         return res.json();
       })
-      .then((data) => setAcessos(data))
+      .then((data) => {
+        console.log("Acessos recebidos:", data); // 👉 ADICIONADO PARA DEBUG
+        setAcessos(data);
+      })
       .catch((err) => {
         console.error(err);
         alert("Falha ao buscar acessos.");
