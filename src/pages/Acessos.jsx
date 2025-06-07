@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 
-function Acessos({ token }) {
+function Acessos() {
   const [acessos, setAcessos] = useState([]);
+
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     if (!token) return;
