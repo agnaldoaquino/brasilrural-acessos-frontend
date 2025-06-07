@@ -47,7 +47,7 @@ function Acessos() {
     <div className="p-8 bg-gray-100 min-h-screen">
       <div className="flex items-center mb-6">
         <img
-          src="https://uploaddeimagens.com.br/images/004/863/845/original/logo_brasil_rural.png?1717783020"
+          src="/Logo-Brasil-Rural.png"
           alt="Brasil Rural Logo"
           className="h-12 mr-4"
         />

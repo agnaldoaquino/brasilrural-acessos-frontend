@@ -44,7 +44,7 @@ function Login({ onLogin }) {
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-sm">
         <div className="flex justify-center mb-6">
-          <img src="/Logo Brasil Rural.png" alt="Brasil Rural" className="w-16 h-16 rounded-full shadow" />
+          <img src="/Logo-Brasil-Rural.png" alt="Brasil Rural" className="w-16 h-16 rounded-full shadow" />
         </div>
         <h2 className="text-center text-xl font-semibold text-gray-800 mb-4">
           Acessar Painel
