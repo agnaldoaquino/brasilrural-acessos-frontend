@@ -22,7 +22,7 @@ function CriarUsuario() {
     apiPost("/usuarios", payload)
       .then((data) => {
         console.log("Usuário criado com sucesso:", data);
-        toast.success("Usuário criado com sucesso!");
+        toast.success(`Usuário "${username}" criado com sucesso!`);
 
         // Resetar campos se quiser:
         setUsername("");

@@ -5,11 +5,14 @@ import { toast } from "react-toastify"; // Importação do Toastify
 function Login({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false); // Adicionado state de loading
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true); // Inicia o loading
 
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/token`, {
@@ -47,6 +50,8 @@ function Login({ onLogin }) {
     } catch (error) {
       console.error(error);
       toast.error(error.message || "Erro ao fazer login.");
+    } finally {
+      setLoading(false); // Finaliza o loading
     }
   };
 
@@ -89,9 +94,12 @@ function Login({ onLogin }) {
 
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+            disabled={loading} // Desabilita o botão se estiver carregando
+            className={`w-full py-2 rounded text-white ${
+              loading ? "bg-blue-300 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
-            Entrar
+            {loading ? "Entrando..." : "Entrar"}
           </button>
         </form>
       </div>

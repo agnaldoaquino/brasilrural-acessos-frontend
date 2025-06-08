@@ -20,6 +20,7 @@ function Acessos() {
       .then((data) => {
         console.log("Acessos recebidos:", data);
         setAcessos(data);
+        toast.success("Acessos carregados com sucesso."); // <== Aqui a melhoria
       })
       .catch((err) => {
         console.error(err);
