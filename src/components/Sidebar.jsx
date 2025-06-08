@@ -2,13 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { MdListAlt, MdPersonAdd, MdPeople, MdLogout, MdMenu } from "react-icons/md";
 
-const Sidebar = ({ onLogout }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
-  };
-
+const Sidebar = ({ onLogout, isCollapsed, toggleSidebar }) => {
   const menuItems = [
     { path: "/", label: "Acessos", icon: <MdListAlt size={24} /> },
     { path: "/criar-usuario", label: "Criar Usuário", icon: <MdPersonAdd size={24} /> },

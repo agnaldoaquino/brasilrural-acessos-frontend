@@ -31,10 +31,15 @@ function App() {
 
 function AppContent({ token, setToken }) {
   const navigate = useNavigate();
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const handleLogout = () => {
     setToken(null);
     navigate("/login");
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarCollapsed(!isSidebarCollapsed);
   };
 
   // Se não logado → só mostra Login
@@ -53,13 +58,24 @@ function AppContent({ token, setToken }) {
   // Se logado → mostra Sidebar + rotas protegidas
   return (
     <div style={{ display: "flex" }}>
-      <Sidebar onLogout={handleLogout} />
+      <Sidebar
+        onLogout={handleLogout}
+        isCollapsed={isSidebarCollapsed}
+        toggleSidebar={toggleSidebar}
+      />
 
-      <main style={{ flexGrow: 1, padding: "1rem" }}>
+      <main
+        style={{
+          flexGrow: 1,
+          padding: "1rem",
+          marginLeft: isSidebarCollapsed ? "60px" : "200px",
+          transition: "margin-left 0.3s",
+        }}
+      >
         <Routes>
           <Route path="/" element={<Acessos token={token} />} />
           <Route path="/criar-usuario" element={<CriarUsuario token={token} />} />
-          <Route path="/usuarios" element={<Usuarios token={token} />} /> {/* opcional */}
+          <Route path="/usuarios" element={<Usuarios token={token} />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
 
