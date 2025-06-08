@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { api } from "../utils/api";
+import { apiGet } from "../utils/api";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Usuarios = ({ token }) => {
@@ -11,12 +11,8 @@ const Usuarios = ({ token }) => {
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
-        const response = await api.get("/usuarios", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUsuarios(response.data);
+        const response = await apiGet("/usuarios");
+        setUsuarios(response);
       } catch (error) {
         console.error("Erro ao buscar usuários:", error);
       }
