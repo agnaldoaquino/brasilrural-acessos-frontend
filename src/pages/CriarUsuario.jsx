@@ -1,72 +1,99 @@
-import React, { useState } from 'react';
+import { useState } from "react";
+import { apiPost } from "../utils/api";
+import { toast } from "react-toastify"; // Importação do Toastify
 
 function CriarUsuario() {
-  const token = localStorage.getItem("access_token");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [criaUsuario, setCriaUsuario] = useState(false);
+  const [loading, setLoading] = useState(false); // Adicionado state de loading
 
-  const [username, setUsername] = useState('');
-  const [senha, setSenha] = useState('');
-  const [mensagem, setMensagem] = useState('');
-  const [erro, setErro] = useState('');
+  const handleCriarUsuario = () => {
+    const payload = {
+      username,
+      email,
+      password,
+      cria_usuario: criaUsuario,
+    };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    setLoading(true); // Inicia o loading
 
-    try {
-      const formData = new URLSearchParams();
-      formData.append('novo_username', username);
-      formData.append('nova_senha', senha);
+    apiPost("/usuarios", payload)
+      .then((data) => {
+        console.log("Usuário criado com sucesso:", data);
+        toast.success("Usuário criado com sucesso!");
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/criar_usuario`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formData,
+        // Resetar campos se quiser:
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setCriaUsuario(false);
+      })
+      .catch((err) => {
+        console.error("Erro ao criar usuário:", err);
+        toast.error("Erro ao criar usuário. Verifique os dados e tente novamente.");
+      })
+      .finally(() => {
+        setLoading(false); // Finaliza o loading
       });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setMensagem(data.mensagem);
-        setErro('');
-        setUsername('');
-        setSenha('');
-      } else {
-        setErro(data.detail || 'Erro ao criar usuário');
-        setMensagem('');
-      }
-    } catch (error) {
-      setErro('Erro de conexão com o servidor');
-      setMensagem('');
-    }
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '0 auto' }}>
-      <h2>Criar Novo Usuário</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Usuário:</label>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Criar Usuário</h1>
+
+      <div className="mb-2">
+        <label className="block font-semibold">Nome de Usuário</label>
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          required
+          className="border p-2 w-full"
         />
+      </div>
 
-        <label>Senha:</label>
+      <div className="mb-2">
+        <label className="block font-semibold">Email</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="border p-2 w-full"
+        />
+      </div>
+
+      <div className="mb-2">
+        <label className="block font-semibold">Senha</label>
         <input
           type="password"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="border p-2 w-full"
         />
+      </div>
 
-        <button type="submit">Criar Usuário</button>
-      </form>
+      <div className="mb-4">
+        <label className="inline-flex items-center">
+          <input
+            type="checkbox"
+            checked={criaUsuario}
+            onChange={(e) => setCriaUsuario(e.target.checked)}
+            className="mr-2"
+          />
+          Pode criar outros usuários
+        </label>
+      </div>
 
-      {mensagem && <p style={{ color: 'green' }}>{mensagem}</p>}
-      {erro && <p style={{ color: 'red' }}>{erro}</p>}
+      <button
+        onClick={handleCriarUsuario}
+        disabled={loading} // Desabilita o botão se estiver carregando
+        className={`px-4 py-2 rounded text-white ${
+          loading ? "bg-blue-300 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+        }`}
+      >
+        {loading ? "Criando usuário..." : "Criar Usuário"}
+      </button>
     </div>
   );
 }

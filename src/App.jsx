@@ -4,6 +4,10 @@ import Login from "./pages/Login";
 import CriarUsuario from "./pages/CriarUsuario";
 import Acessos from "./pages/Acessos";
 
+// Importações do React Toastify
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   const [token, setToken] = useState(localStorage.getItem("access_token"));
 
@@ -58,6 +62,9 @@ function AppContent({ token, setToken }) {
         <Route path="/criar-usuario" element={token ? <CriarUsuario token={token} /> : <Navigate to="/login" />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+
+      {/* ToastContainer posicionado aqui para aparecer em qualquer tela */}
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 }
