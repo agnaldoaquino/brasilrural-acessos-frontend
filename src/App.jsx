@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "r
 import Login from "./pages/Login";
 import CriarUsuario from "./pages/CriarUsuario";
 import Acessos from "./pages/Acessos";
-import Usuarios from "./pages/Usuarios"; // você pode criar depois, placeholder aqui
+import Usuarios from "./pages/Usuarios";
 
 import Sidebar from "./components/Sidebar";
 
