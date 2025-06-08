@@ -13,7 +13,7 @@ const Sidebar = ({ onLogout, isCollapsed, toggleSidebar }) => {
     <div
       style={{
         width: isCollapsed ? "60px" : "200px",
-        backgroundColor: "#002B36", // teal escuro institucional
+        backgroundColor: "#004050", // teal escuro institucional
         color: "white",
         height: "100vh",
         position: "fixed",
