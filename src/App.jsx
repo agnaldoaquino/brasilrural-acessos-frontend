@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "r
 import Login from "./pages/Login";
 import CriarUsuario from "./pages/CriarUsuario";
 import Acessos from "./pages/Acessos";
+import Usuarios from "./pages/Usuarios"; // você pode criar depois, placeholder aqui
+
+import Sidebar from "./components/Sidebar";
 
 // Importações do React Toastify
 import { ToastContainer } from "react-toastify";
@@ -26,7 +29,6 @@ function App() {
   );
 }
 
-// Separação para usar useNavigate com segurança
 function AppContent({ token, setToken }) {
   const navigate = useNavigate();
 
@@ -35,36 +37,34 @@ function AppContent({ token, setToken }) {
     navigate("/login");
   };
 
+  // Se não logado → só mostra Login
+  if (!token) {
+    return (
+      <>
+        <Routes>
+          <Route path="/login" element={<Login onLogin={setToken} />} />
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Routes>
+        <ToastContainer position="top-center" autoClose={3000} />
+      </>
+    );
+  }
+
+  // Se logado → mostra Sidebar + rotas protegidas
   return (
-    <div style={{ padding: "1rem" }}>
-      {token && (
-        <button
-          style={{
-            position: "absolute",
-            top: 10,
-            right: 10,
-            padding: "0.5rem 1rem",
-            backgroundColor: "#d9534f",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-          onClick={handleLogout}
-        >
-          Sair
-        </button>
-      )}
+    <div style={{ display: "flex" }}>
+      <Sidebar onLogout={handleLogout} />
 
-      <Routes>
-        <Route path="/" element={token ? <Acessos token={token} /> : <Navigate to="/login" />} />
-        <Route path="/login" element={<Login onLogin={setToken} />} />
-        <Route path="/criar-usuario" element={token ? <CriarUsuario token={token} /> : <Navigate to="/login" />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+      <main style={{ flexGrow: 1, padding: "1rem" }}>
+        <Routes>
+          <Route path="/" element={<Acessos token={token} />} />
+          <Route path="/criar-usuario" element={<CriarUsuario token={token} />} />
+          <Route path="/usuarios" element={<Usuarios token={token} />} /> {/* opcional */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
 
-      {/* ToastContainer posicionado aqui para aparecer em qualquer tela */}
-      <ToastContainer position="top-center" autoClose={3000} />
+        <ToastContainer position="top-center" autoClose={3000} />
+      </main>
     </div>
   );
 }
