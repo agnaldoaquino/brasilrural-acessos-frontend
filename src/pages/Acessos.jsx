@@ -1,7 +1,7 @@
 import { apiGet } from "../utils/api";
 import { useEffect, useState } from "react";
 import FiltroAcessos from "../components/FiltroAcessos";
-import TabelaAcessos from "../components/TabelaAcessos";
+import TabelaGenerica from "../components/TabelaGenerica";
 
 // Importação do Toastify
 import { toast } from "react-toastify";
@@ -45,6 +45,16 @@ function Acessos() {
     });
   };
 
+  // Definição das colunas para TabelaGenerica
+  const colunas = [
+    { titulo: "Serviço", campo: "servico" },
+    { titulo: "Empresa", campo: "empresa" },
+    { titulo: "Usuário", campo: "usuario" },
+    { titulo: "Senha", campo: "senha" },
+    { titulo: "Observação", campo: "observacao" },
+    { titulo: "Data de Criação", campo: "created_at" },
+  ];
+
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
       <div className="flex items-center mb-6">
@@ -71,7 +81,7 @@ function Acessos() {
           Carregando acessos...
         </div>
       ) : (
-        <TabelaAcessos acessos={filtrarAcessos()} />
+        <TabelaGenerica colunas={colunas} dados={filtrarAcessos()} />
       )}
     </div>
   );
