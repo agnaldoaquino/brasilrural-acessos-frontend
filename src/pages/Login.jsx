@@ -35,8 +35,8 @@ function Login({ onLogin }) {
         criaUsuario: data.cria_usuario,
       });
 
-      // 👉 Salva o token no localStorage (para que Acessos.jsx consiga usar)
-      localStorage.setItem("token", data.access_token);
+      // 👉 Salva o token no localStorage com a chave CORRETA
+      localStorage.setItem("access_token", data.access_token);
       localStorage.setItem("cria_usuario", data.cria_usuario);
 
       // 👉 Mostra no console o token que foi salvo
@@ -70,41 +70,4 @@ function Login({ onLogin }) {
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Digite seu e-mail"
-              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-500"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Senha</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Digite sua senha"
-              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-500"
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading} // Desabilita o botão se estiver carregando
-            className={`w-full py-2 rounded text-white ${
-              loading ? "bg-blue-300 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
-            }`}
-          >
-            {loading ? "Entrando..." : "Entrar"}
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-}
-
-export default Login;
+            <label className="block
