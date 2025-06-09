@@ -29,11 +29,8 @@ function Login({ onLogin }) {
 
       const data = await response.json();
 
-      // Atualiza o estado do app
-      onLogin({
-        token: data.access_token,
-        criaUsuario: data.cria_usuario,
-      });
+      // Atualiza o estado do app com o token (APENAS a string)
+      onLogin(data.access_token);
 
       // 👉 Salva o token no localStorage com a chave CORRETA
       localStorage.setItem("access_token", data.access_token);
