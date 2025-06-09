@@ -30,34 +30,25 @@ const TabelaUsuarios = ({ usuarios, loading }) => {
   }
 
   return (
-    <div className="overflow-x-auto bg-white rounded-lg shadow">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+    <div className="overflow-x-auto bg-white rounded shadow">
+      <table className="w-full text-left border-collapse">
+        <thead className="bg-gray-200">
           <tr>
-            <th className="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">
-              Selecionar
-            </th>
-            <th className="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">
-              Nome do usuário
-            </th>
-            <th className="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">
-              E-mail
-            </th>
-            <th className="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">
-              Senha
-            </th>
-            <th className="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">
-              Cria Usuários
-            </th>
-            <th className="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">
-              Data de Criação
-            </th>
+            <th className="p-3 border">Selecionar</th>
+            <th className="p-3 border">Nome do usuário</th>
+            <th className="p-3 border">E-mail</th>
+            <th className="p-3 border">Senha</th>
+            <th className="p-3 border">Cria Usuários</th>
+            <th className="p-3 border">Data de Criação</th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody>
           {usuarios.map((usuario) => (
-            <tr key={usuario.id}>
-              <td className="px-6 py-4 whitespace-nowrap text-center">
+            <tr
+              key={usuario.id}
+              className="hover:bg-gray-100"
+            >
+              <td className="p-3 border text-center">
                 <input
                   type="checkbox"
                   checked={selectedUsuarios.includes(usuario.id)}
@@ -65,13 +56,9 @@ const TabelaUsuarios = ({ usuarios, loading }) => {
                   className="form-checkbox h-4 w-4 text-blue-600"
                 />
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {usuario.username}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {usuario.email}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="p-3 border">{usuario.username}</td>
+              <td className="p-3 border">{usuario.email}</td>
+              <td className="p-3 border">
                 {showPasswordIds.includes(usuario.id) ? (
                   <>
                     {usuario.password}{" "}
@@ -90,12 +77,10 @@ const TabelaUsuarios = ({ usuarios, loading }) => {
                   </>
                 )}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="p-3 border">
                 {usuario.cria_usuario ? "Sim" : "Não"}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                {usuario.created_at}
-              </td>
+              <td className="p-3 border">{usuario.created_at}</td>
             </tr>
           ))}
         </tbody>
