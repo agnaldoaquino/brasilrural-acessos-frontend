@@ -60,7 +60,7 @@ function Login({ onLogin }) {
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-sm">
         <div className="flex justify-center mb-6">
           <img
-            src="/Logo-Brasil-Rural.png"
+            src="/Logo-Brasil-Rural-v2.png"
             alt="Brasil Rural"
             className="w-16 h-16 rounded-full shadow"
           />
