@@ -1,99 +1,117 @@
-import { useState } from "react";
-import { apiPost } from "../utils/api";
-import { toast } from "react-toastify"; // Importação do Toastify
+import React, { useState } from "react";
+import api from "../utils/api";
+import { toast } from "react-toastify";
 
 function CriarUsuario() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [criaUsuario, setCriaUsuario] = useState(false);
-  const [loading, setLoading] = useState(false); // Adicionado state de loading
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleCriarUsuario = () => {
-    const payload = {
-      username,
-      email,
-      password,
-      cria_usuario: criaUsuario,
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    setLoading(true); // Inicia o loading
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      toast.error("Token não encontrado. Faça login novamente.");
+      return;
+    }
 
-    apiPost("/usuarios", payload)
-      .then((data) => {
-        console.log("Usuário criado com sucesso:", data);
-        toast.success(`Usuário "${username}" criado com sucesso!`);
+    setIsLoading(true);
 
-        // Resetar campos se quiser:
-        setUsername("");
-        setEmail("");
-        setPassword("");
-        setCriaUsuario(false);
-      })
-      .catch((err) => {
-        console.error("Erro ao criar usuário:", err);
-        toast.error("Erro ao criar usuário. Verifique os dados e tente novamente.");
-      })
-      .finally(() => {
-        setLoading(false); // Finaliza o loading
-      });
+    try {
+      await api.post(
+        "/criar_usuario", // endpoint correto
+        {
+          username,
+          email,
+          password,
+          cria_usuario: criaUsuario, // campo correto
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      toast.success(`Usuário "${username}" criado com sucesso!`);
+
+      // Limpar o formulário
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      setCriaUsuario(false);
+    } catch (error) {
+      console.error("Erro ao criar usuário:", error);
+      toast.error("Erro ao criar usuário.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Criar Usuário</h1>
+    <div className="p-8">
+      <h1 className="text-3xl font-bold mb-6 flex items-center space-x-2">
+        <img src="/Logo-Brasil-Rural.png" alt="Logo" className="h-10 mr-3" />
+        <span>Criar Usuário</span>
+      </h1>
 
-      <div className="mb-2">
-        <label className="block font-semibold">Nome de Usuário</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="border p-2 w-full"
-        />
-      </div>
+      <form onSubmit={handleSubmit} className="max-w-md space-y-4">
+        <div>
+          <label className="block mb-1 font-semibold">Nome de Usuário</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
 
-      <div className="mb-2">
-        <label className="block font-semibold">Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="border p-2 w-full"
-        />
-      </div>
+        <div>
+          <label className="block mb-1 font-semibold">Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
 
-      <div className="mb-2">
-        <label className="block font-semibold">Senha</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="border p-2 w-full"
-        />
-      </div>
+        <div>
+          <label className="block mb-1 font-semibold">Senha</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
 
-      <div className="mb-4">
-        <label className="inline-flex items-center">
+        <div className="flex items-center">
           <input
             type="checkbox"
             checked={criaUsuario}
             onChange={(e) => setCriaUsuario(e.target.checked)}
             className="mr-2"
           />
-          Pode criar outros usuários
-        </label>
-      </div>
+          <label> Pode criar outros usuários </label>
+        </div>
 
-      <button
-        onClick={handleCriarUsuario}
-        disabled={loading} // Desabilita o botão se estiver carregando
-        className={`px-4 py-2 rounded text-white ${
-          loading ? "bg-blue-300 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
-        }`}
-      >
-        {loading ? "Criando usuário..." : "Criar Usuário"}
-      </button>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className={`bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          {isLoading ? "Criando usuário..." : "Criar Usuário"}
+        </button>
+      </form>
     </div>
   );
 }
