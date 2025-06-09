@@ -8,7 +8,7 @@ import Usuarios from "./pages/Usuarios";
 import Sidebar from "./components/Sidebar";
 
 // Importações do React Toastify
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -34,7 +34,17 @@ function AppContent({ token, setToken }) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const handleLogout = () => {
+    // Limpa localStorage
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("cria_usuario");
+
+    // Limpa state
     setToken(null);
+
+    // Toast
+    toast.success("Logout realizado com sucesso!");
+
+    // Redireciona
     navigate("/login");
   };
 
@@ -59,9 +69,10 @@ function AppContent({ token, setToken }) {
   return (
     <div style={{ display: "flex" }}>
       <Sidebar
-        onLogout={handleLogout}
+        onLogout={handleLogout} // <-- aqui estamos passando o onLogout correto
         isCollapsed={isSidebarCollapsed}
         toggleSidebar={toggleSidebar}
+        setToken={setToken} // <-- passamos também o setToken para a Sidebar
       />
 
       <main

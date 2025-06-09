@@ -1,8 +1,25 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { MdListAlt, MdPersonAdd, MdPeople, MdLogout, MdMenu } from "react-icons/md";
+import { toast } from "react-toastify";
 
-const Sidebar = ({ onLogout, isCollapsed, toggleSidebar }) => {
+const Sidebar = ({ isCollapsed, toggleSidebar, setToken }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Limpa localStorage
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("cria_usuario");
+
+    // Limpa o state de token (se for passado)
+    if (setToken) setToken("");
+
+    // Toast de sucesso
+    toast.success("Logout realizado com sucesso!");
+
+    // Redireciona para login
+    navigate("/login");
+  };
+
   const menuItems = [
     { path: "/", label: "Acessos", icon: <MdListAlt size={24} /> },
     { path: "/criar-usuario", label: "Criar Usuário", icon: <MdPersonAdd size={24} /> },
@@ -70,7 +87,7 @@ const Sidebar = ({ onLogout, isCollapsed, toggleSidebar }) => {
           justifyContent: isCollapsed ? "center" : "flex-start",
           borderTop: "1px solid rgba(255, 255, 255, 0.2)",
         }}
-        onClick={onLogout}
+        onClick={handleLogout}
       >
         <MdLogout size={24} />
         {!isCollapsed && <span style={{ marginLeft: "10px" }}>Sair</span>}
