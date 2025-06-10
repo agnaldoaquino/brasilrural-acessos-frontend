@@ -1,9 +1,7 @@
-import { apiGet } from "../utils/api";
+import api from "../utils/api";
 import { useEffect, useState } from "react";
 import FiltroAcessos from "../components/FiltroAcessos";
 import TabelaGenerica from "../components/TabelaGenerica";
-
-// Importação do Toastify
 import { toast } from "react-toastify";
 
 function Acessos() {
@@ -11,25 +9,47 @@ function Acessos() {
   const [servicoFiltro, setServicoFiltro] = useState("");
   const [empresaFiltro, setEmpresaFiltro] = useState("");
   const [busca, setBusca] = useState("");
-  const [loading, setLoading] = useState(false); // Adicionado state de loading
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true); // Inicia o loading
+  // Buscar acessos
+  const fetchAcessos = () => {
+    setLoading(true);
 
-    apiGet("/acessos")
-      .then((data) => {
-        console.log("Acessos recebidos:", data);
-        setAcessos(data);
-        toast.success("Acessos carregados com sucesso."); // <== Aqui a melhoria
+    api
+      .get("/acessos")
+      .then((response) => {
+        console.log("Acessos recebidos:", response.data);
+        setAcessos(response.data);
+        toast.success("Acessos carregados com sucesso.");
       })
       .catch((err) => {
         console.error(err);
         toast.error("Falha ao buscar acessos.");
       })
       .finally(() => {
-        setLoading(false); // Finaliza o loading
+        setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchAcessos();
   }, []);
+
+  // Deletar acesso
+  const handleDelete = (id) => {
+    if (!window.confirm("Tem certeza que deseja excluir este acesso?")) return;
+
+    api
+      .delete(`/acessos/${id}`)
+      .then(() => {
+        toast.success("Acesso excluído com sucesso.");
+        fetchAcessos();
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("Erro ao excluir acesso.");
+      });
+  };
 
   const filtrarAcessos = () => {
     return acessos.filter((item) => {
@@ -45,7 +65,6 @@ function Acessos() {
     });
   };
 
-  // Definição das colunas para TabelaGenerica
   const colunas = [
     { titulo: "Serviço", campo: "servico" },
     { titulo: "Empresa", campo: "empresa" },
@@ -81,7 +100,11 @@ function Acessos() {
           Carregando acessos...
         </div>
       ) : (
-        <TabelaGenerica colunas={colunas} dados={filtrarAcessos()} />
+        <TabelaGenerica
+          colunas={colunas}
+          dados={filtrarAcessos()}
+          onDelete={handleDelete} // Aqui agora passa a função de deletar
+        />
       )}
     </div>
   );
