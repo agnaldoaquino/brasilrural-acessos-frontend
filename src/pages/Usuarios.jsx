@@ -49,7 +49,6 @@ const Usuarios = ({ token }) => {
     try {
       await api.delete(`/usuarios/${id}`);
       toast.success("Usuário excluído com sucesso.");
-      // Atualizar a lista
       fetchUsuarios();
     } catch (error) {
       console.error("Erro ao excluir usuário:", error);

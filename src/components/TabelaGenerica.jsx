@@ -56,7 +56,7 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes }) => {
 
             {renderAcoes && (
               <th className="p-3 border text-gray-700 font-bold uppercase tracking-wider text-xs">
-                A\u00e7\u00f5es
+                Ações
               </th>
             )}
           </tr>

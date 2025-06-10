@@ -1,7 +1,7 @@
 // src/pages/CriarUsuario.jsx
 
 import React, { useState } from "react";
-import api from "../utils/api";  // ✅ Correto agora
+import api from "../utils/api";
 import { toast } from "react-toastify";
 
 function CriarUsuario() {
@@ -14,29 +14,15 @@ function CriarUsuario() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("access_token");
-    if (!token) {
-      toast.error("Token não encontrado. Faça login novamente.");
-      return;
-    }
-
     setIsLoading(true);
 
     try {
-      await api.post(
-        "/criar_usuario",
-        {
-          username,
-          email,
-          password,
-          cria_usuario: criaUsuario,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await api.post("/criar_usuario", {
+        username,
+        email,
+        password,
+        cria_usuario: criaUsuario,
+      });
 
       toast.success(`Usuário "${username}" criado com sucesso!`);
 
