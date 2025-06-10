@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FiEye, FiEyeOff, FiCopy } from "react-icons/fi";
+import { toast } from "react-toastify";
 
 
 function SenhaCell({ senha }) {
@@ -7,7 +8,9 @@ function SenhaCell({ senha }) {
 
 const copiarSenha = () => {
   navigator.clipboard.writeText(senha).then(() => {
-    toast.success("Senha copiada para a área de transferência."); // Opcional: você pode colocar um toast aqui se quiser
+    toast.success("Senha copiada para a área de transferência.", {
+  autoClose: 1500,
+}); // Opcional: você pode colocar um toast aqui se quiser
     console.log("Senha copiada!");
   });
 };  
