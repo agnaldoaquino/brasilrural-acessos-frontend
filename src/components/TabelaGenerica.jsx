@@ -57,18 +57,18 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
 
             {renderAcoes && (
   <th className="p-3 border text-gray-700 font-bold uppercase tracking-wider text-xs">
-    <div className="flex items-center space-x-1">
-      <span>Ações</span>
-      <button
-        type="button"
-        onClick={onRefreshClick}
-        title="Recarregar acessos"
-        className="text-gray-700 hover:text-gray-900"
-      >
-        <FiRefreshCw className="w-4 h-4" />
-      </button>
-    </div>
-  </th>
+  <div className="flex justify-between items-center">
+    <span>Ações</span>
+    <button
+      type="button"
+      onClick={onRefreshClick}
+      title="Recarregar acessos"
+      className="p-1 rounded text-gray-700 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
+    >
+      <FiRefreshCw className="w-4 h-4" />
+    </button>
+  </div>
+</th>
 )}
           </tr>
         </thead>
