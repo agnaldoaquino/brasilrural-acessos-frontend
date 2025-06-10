@@ -113,14 +113,6 @@ function Acessos() {
         setBusca={setBusca}
       />
 
-      {/* Botão Recarregar */}
-      <button
-        onClick={() => fetchAcessos(true)}
-        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-      >
-        Recarregar Acessos
-      </button>
-
       {loading ? (
         <div className="text-center text-blue-600 font-semibold mb-4">
           Carregando acessos...
