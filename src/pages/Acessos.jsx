@@ -5,6 +5,8 @@ import TabelaGenerica from "../components/TabelaGenerica";
 import { toast } from "react-toastify";
 import { FaTrash } from "react-icons/fa";
 import { HiOutlinePencil } from "react-icons/hi";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+
 
 function Acessos() {
   const [acessos, setAcessos] = useState([]);
@@ -88,7 +90,29 @@ function Acessos() {
     { titulo: "Acesso", campo: "acesso" },
     { titulo: "Empresa", campo: "empresa" },
     { titulo: "Usuário", campo: "usuario" },
-    { titulo: "Senha", campo: "senha" },
+    {
+  titulo: "Senha",
+  campo: "senha",
+  render: (valor) => {
+    const [mostrarSenha, setMostrarSenha] = useState(false);
+
+    return (
+      <div className="flex justify-between items-center w-full">
+        <span className="tracking-widest">
+          {mostrarSenha ? valor : "••••••••"}
+        </span>
+        <button
+          type="button"
+          onClick={() => setMostrarSenha(!mostrarSenha)}
+          className="p-1 rounded text-gray-700 hover:text-gray-900 hover:bg-gray-200 cursor-pointer ml-2"
+          title={mostrarSenha ? "Ocultar senha" : "Mostrar senha"}
+        >
+          {mostrarSenha ? <FiEyeOff className="w-4 h-4" /> : <FiEye className="w-4 h-4" />}
+        </button>
+      </div>
+    );
+  },
+},
     {
   titulo: "URL",
   campo: "url",
