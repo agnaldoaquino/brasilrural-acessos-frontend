@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 
+
 const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
   const [ordenarPor, setOrdenarPor] = useState("");
   const [ordemAscendente, setOrdemAscendente] = useState(true);
