@@ -82,7 +82,7 @@ function Acessos() {
   };
 
   const colunas = [
-    { titulo: "Serviço", campo: "servico" },
+    { titulo: "Acesso", campo: "acesso" },
     { titulo: "Empresa", campo: "empresa" },
     { titulo: "Usuário", campo: "usuario" },
     { titulo: "Senha", campo: "senha" },
