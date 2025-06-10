@@ -1,76 +1,45 @@
-export async function apiGet(path) {
-  const token = localStorage.getItem("access_token"); // seu token é "access_token" no projeto atual
-  const response = await fetch(`${import.meta.env.VITE_API_URL}${path}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+// src/utils/api.js
+//
+// API client configurado com axios.
+// 
+// ✅ Uso:
+// import api from "../utils/api";
+//
+// Exemplo de uso:
+// await api.get("/usuarios");
+// await api.post("/criar_usuario", data);
+// await api.put("/usuarios/123", data);
+// await api.delete("/usuarios/123");
+//
+// ✅ O token JWT (access_token) é adicionado automaticamente no header Authorization.
+// Não é necessário configurar isso manualmente em cada chamada.
+//
+// Variável de ambiente obrigatória:
+// VITE_API_URL → deve apontar para a URL base da sua API backend.
+//
+// Exemplo no .env:
+// VITE_API_URL=https://brasilrural-acessos-backend-production.up.railway.app
+//
 
-  if (!response.ok) {
-    throw new Error(`Erro ao buscar ${path}: ${response.status}`);
+import axios from "axios";
+
+// Cria a instância do axios com a baseURL
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+});
+
+// Interceptor para adicionar o token automaticamente em todas as requisições
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-
-  return await response.json();
-}
-
-export async function apiPost(path, body) {
-  const token = localStorage.getItem("access_token");
-  const response = await fetch(`${import.meta.env.VITE_API_URL}${path}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Erro ao enviar ${path}: ${response.status}`);
-  }
-
-  return await response.json();
-}
-
-export async function apiPut(path, body) {
-  const token = localStorage.getItem("access_token");
-  const response = await fetch(`${import.meta.env.VITE_API_URL}${path}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Erro ao atualizar ${path}: ${response.status}`);
-  }
-
-  return await response.json();
-}
-
-export async function apiDelete(path) {
-  const token = localStorage.getItem("access_token");
-  const response = await fetch(`${import.meta.env.VITE_API_URL}${path}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Erro ao deletar ${path}: ${response.status}`);
-  }
-
-  return await response.json();
-}
-
-// 👇 Adicionado export default api (padrão para seu projeto)
-const api = {
-  apiGet,
-  apiPost,
-  apiPut,
-  apiDelete,
-};
+);
 
 export default api;
