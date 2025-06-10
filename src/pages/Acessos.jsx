@@ -89,7 +89,23 @@ function Acessos() {
     { titulo: "Empresa", campo: "empresa" },
     { titulo: "Usuário", campo: "usuario" },
     { titulo: "Senha", campo: "senha" },
-    { titulo: "URL", campo: "url" },
+    {
+  titulo: "URL",
+  campo: "url",
+  render: (valor) =>
+    valor ? (
+      <a
+        href={valor}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 hover:underline"
+      >
+        {valor}
+      </a>
+    ) : (
+      "-"
+    ),
+},
   ];
 
   return (
