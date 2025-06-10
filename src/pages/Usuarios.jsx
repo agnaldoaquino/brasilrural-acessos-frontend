@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import api from "../utils/api";
 import { toast } from "react-toastify";
 import TabelaGenerica from "../components/TabelaGenerica";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaTrash } from "react-icons/fa";
 
 const Usuarios = ({ token }) => {
   const [usuarios, setUsuarios] = useState([]);
@@ -11,24 +11,23 @@ const Usuarios = ({ token }) => {
   const [showPasswordIds, setShowPasswordIds] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
-
-    const fetchUsuarios = async () => {
-      try {
-        const response = await api.apiGet("/usuarios");
-        console.log("Usuários recebidos:", response);
-        setUsuarios(response);
-        toast.success("Usuários carregados com sucesso.");
-      } catch (error) {
-        console.error("Erro ao buscar usuários:", error);
-        toast.error("Falha ao buscar usuários.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUsuarios();
   }, [token]);
+
+  const fetchUsuarios = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get("/usuarios");
+      console.log("Usuários recebidos:", response.data);
+      setUsuarios(response.data);
+      toast.success("Usuários carregados com sucesso.");
+    } catch (error) {
+      console.error("Erro ao buscar usuários:", error);
+      toast.error("Falha ao buscar usuários.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -40,6 +39,22 @@ const Usuarios = ({ token }) => {
         ? prev.filter((item) => item !== id)
         : [...prev, id]
     );
+  };
+
+  const handleDeleteUsuario = async (id) => {
+    if (!window.confirm("Tem certeza que deseja excluir este usuário?")) {
+      return;
+    }
+
+    try {
+      await api.delete(`/usuarios/${id}`);
+      toast.success("Usuário excluído com sucesso.");
+      // Atualizar a lista
+      fetchUsuarios();
+    } catch (error) {
+      console.error("Erro ao excluir usuário:", error);
+      toast.error("Erro ao excluir usuário.");
+    }
   };
 
   const filteredUsuarios = usuarios.filter(
@@ -105,7 +120,19 @@ const Usuarios = ({ token }) => {
           Carregando usuários...
         </div>
       ) : (
-        <TabelaGenerica colunas={colunas} dados={filteredUsuarios} />
+        <TabelaGenerica
+          colunas={colunas}
+          dados={filteredUsuarios}
+          renderAcoes={(usuario) => (
+            <button
+              onClick={() => handleDeleteUsuario(usuario.id)}
+              className="text-red-600 hover:text-red-800"
+              title="Excluir usuário"
+            >
+              <FaTrash />
+            </button>
+          )}
+        />
       )}
     </div>
   );
