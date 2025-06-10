@@ -17,7 +17,7 @@ function Acessos() {
   const [selectedAcesso, setSelectedAcesso] = useState(null);
 
   // Buscar acessos
-  const fetchAcessos = () => {
+  const fetchAcessos = (exibirToast = false) => {
     setLoading(true);
 
     api
@@ -25,7 +25,10 @@ function Acessos() {
       .then((response) => {
         console.log("Acessos recebidos:", response.data);
         setAcessos(response.data);
-        toast.success("Acessos carregados com sucesso.");
+
+        if (exibirToast) {
+          toast.success("Acessos carregados com sucesso.");
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -37,7 +40,7 @@ function Acessos() {
   };
 
   useEffect(() => {
-    fetchAcessos();
+    fetchAcessos(); // não exibe toast na carga inicial
   }, []);
 
   // Deletar acesso
@@ -109,6 +112,14 @@ function Acessos() {
         busca={busca}
         setBusca={setBusca}
       />
+
+      {/* Botão Recarregar */}
+      <button
+        onClick={() => fetchAcessos(true)}
+        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+        Recarregar Acessos
+      </button>
 
       {loading ? (
         <div className="text-center text-blue-600 font-semibold mb-4">
