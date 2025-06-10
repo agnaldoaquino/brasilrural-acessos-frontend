@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { FiRefreshCw } from "react-icons/fi";
 
-const TabelaGenerica = ({ colunas, dados, renderAcoes }) => {
+const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
   const [ordenarPor, setOrdenarPor] = useState("");
   const [ordemAscendente, setOrdemAscendente] = useState(true);
 
@@ -55,10 +56,20 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes }) => {
             ))}
 
             {renderAcoes && (
-              <th className="p-3 border text-gray-700 font-bold uppercase tracking-wider text-xs">
-                Ações
-              </th>
-            )}
+  <th className="p-3 border text-gray-700 font-bold uppercase tracking-wider text-xs">
+    <div className="flex items-center space-x-1">
+      <span>Ações</span>
+      <button
+        type="button"
+        onClick={onRefreshClick}
+        title="Recarregar acessos"
+        className="text-gray-700 hover:text-gray-900"
+      >
+        <FiRefreshCw className="w-4 h-4" />
+      </button>
+    </div>
+  </th>
+)}
           </tr>
         </thead>
         <tbody>
