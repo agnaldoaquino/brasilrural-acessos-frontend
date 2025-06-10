@@ -1,5 +1,7 @@
+// src/pages/CriarUsuario.jsx
+
 import React, { useState } from "react";
-import api from "../utils/api";
+import api from "../utils/api";  // ✅ Correto agora
 import { toast } from "react-toastify";
 
 function CriarUsuario() {
@@ -22,12 +24,12 @@ function CriarUsuario() {
 
     try {
       await api.post(
-        "/criar_usuario", // endpoint correto
+        "/criar_usuario",
         {
           username,
           email,
           password,
-          cria_usuario: criaUsuario, // campo correto
+          cria_usuario: criaUsuario,
         },
         {
           headers: {
@@ -52,15 +54,19 @@ function CriarUsuario() {
   };
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6 flex items-center space-x-2">
-        <img src="/Logo-Brasil-Rural.png" alt="Logo" className="h-10 mr-3" />
-        <span>Criar Usuário</span>
-      </h1>
+    <div className="p-8 bg-gray-100 min-h-screen">
+      <div className="flex items-center mb-6">
+        <img
+          src="/Logo-Brasil-Rural-v2.png"
+          alt="Brasil Rural Logo"
+          className="h-12 mr-4"
+        />
+        <h1 className="text-3xl font-bold">Criar Usuário</h1>
+      </div>
 
-      <form onSubmit={handleSubmit} className="max-w-md space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
         <div>
-          <label className="block mb-1 font-semibold">Nome de Usuário</label>
+          <label className="block text-sm font-medium mb-1">Nome de Usuário</label>
           <input
             type="text"
             value={username}
@@ -71,7 +77,7 @@ function CriarUsuario() {
         </div>
 
         <div>
-          <label className="block mb-1 font-semibold">Email</label>
+          <label className="block text-sm font-medium mb-1">Email</label>
           <input
             type="email"
             value={email}
@@ -82,7 +88,7 @@ function CriarUsuario() {
         </div>
 
         <div>
-          <label className="block mb-1 font-semibold">Senha</label>
+          <label className="block text-sm font-medium mb-1">Senha</label>
           <input
             type="password"
             value={password}
@@ -99,7 +105,7 @@ function CriarUsuario() {
             onChange={(e) => setCriaUsuario(e.target.checked)}
             className="mr-2"
           />
-          <label> Pode criar outros usuários </label>
+          <label className="text-sm">Pode criar outros usuários</label>
         </div>
 
         <button
