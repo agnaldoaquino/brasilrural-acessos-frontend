@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import FiltroAcessos from "../components/FiltroAcessos";
 import TabelaGenerica from "../components/TabelaGenerica";
 import { toast } from "react-toastify";
+import { FaTrash } from "react-icons/fa";
 
 function Acessos() {
   const [acessos, setAcessos] = useState([]);
@@ -103,7 +104,15 @@ function Acessos() {
         <TabelaGenerica
           colunas={colunas}
           dados={filtrarAcessos()}
-          onDelete={handleDelete} // Aqui agora passa a função de deletar
+          renderAcoes={(acesso) => (
+            <button
+              onClick={() => handleDelete(acesso.id)}
+              className="text-red-600 hover:text-red-800"
+              title="Excluir acesso"
+            >
+              <FaTrash />
+            </button>
+          )}
         />
       )}
     </div>
