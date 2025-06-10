@@ -64,3 +64,13 @@ export async function apiDelete(path) {
 
   return await response.json();
 }
+
+// 👇 Adicionado export default api (padrão para seu projeto)
+const api = {
+  apiGet,
+  apiPost,
+  apiPut,
+  apiDelete,
+};
+
+export default api;
