@@ -9,7 +9,7 @@ function SenhaCell({ senha }) {
 const copiarSenha = () => {
   navigator.clipboard.writeText(senha).then(() => {
     toast.success("Senha copiada para a área de transferência.", {
-  autoClose: 500,
+  autoClose: 100,
 }); // Opcional: você pode colocar um toast aqui se quiser
     console.log("Senha copiada!");
   });
