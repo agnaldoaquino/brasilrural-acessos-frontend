@@ -68,6 +68,25 @@ function Acessos() {
     setIsModalOpen(true);
   };
 
+  const handleSaveAcesso = (formData) => {
+  if (!selectedAcesso?.id) {
+    toast.error("ID do acesso não encontrado.");
+    return;
+  }
+
+  api
+    .put(`/acessos/${selectedAcesso.id}`, formData)
+    .then(() => {
+      toast.success("Acesso atualizado com sucesso.");
+      handleCloseModal();
+      fetchAcessos(true);
+    })
+    .catch((err) => {
+      console.error(err);
+      toast.error("Erro ao atualizar acesso.");
+    });
+};
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedAcesso(null);
@@ -170,7 +189,7 @@ function Acessos() {
   isOpen={isModalOpen}
   onClose={handleCloseModal}
   initialData={selectedAcesso}
-  onSave={(formData) => console.log("Salvar:", formData)}
+  onSave={handleSaveAcesso}
 />
     </div>
   );
