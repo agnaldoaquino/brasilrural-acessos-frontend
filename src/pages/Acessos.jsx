@@ -8,7 +8,7 @@ import { HiOutlinePencil } from "react-icons/hi";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import SenhaCell from "../components/SenhaCell";
 import EditarAcessoModal from "../components/EditarAcessoModal";
-import { getNomeUsuarioLogado } from "../utils/auth";
+import { getNomeUsuarioLogado } from "../utils/auth.js";
 
 
 function Acessos() {
