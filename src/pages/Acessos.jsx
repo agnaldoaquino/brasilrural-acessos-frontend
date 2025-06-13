@@ -8,6 +8,8 @@ import { HiOutlinePencil } from "react-icons/hi";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import SenhaCell from "../components/SenhaCell";
 import EditarAcessoModal from "../components/EditarAcessoModal";
+import { getNomeUsuarioLogado } from "../utils/auth";
+
 
 function Acessos() {
   const [acessos, setAcessos] = useState([]);
@@ -74,8 +76,13 @@ function Acessos() {
     return;
   }
 
+  const payload = {
+    ...formData,
+    atualizado_por: getNomeUsuarioLogado()
+  };
+
   api
-    .put(`/acessos/${selectedAcesso.id}`, formData)
+    .put(`/acessos/${selectedAcesso.id}`, payload)
     .then(() => {
       toast.success("Acesso atualizado com sucesso.");
       handleCloseModal();
