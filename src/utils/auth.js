@@ -1,4 +1,5 @@
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
 export function getNomeUsuarioLogado() {
   const token = localStorage.getItem("token");
@@ -7,14 +8,12 @@ export function getNomeUsuarioLogado() {
   }
 
   try {
-    const decoded = jwt_decode(token);
-    // Aqui você precisa ver qual campo o seu token tem.
-    // Na maioria dos casos, é sub, username ou email.
-    // Vou colocar "sub" como exemplo, depois a gente testa:
+    const decoded = jwtDecode(token);
 
     return decoded.sub || decoded.username || decoded.email || null;
   } catch (error) {
     console.error("Erro ao decodificar token:", error);
+    toast.error("Erro ao decodificar token. Faça login novamente.");
     return null;
   }
 }
