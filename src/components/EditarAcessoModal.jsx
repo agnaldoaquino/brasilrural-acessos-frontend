@@ -17,6 +17,7 @@ function EditarAcessoModal({ isOpen, onClose, initialData, onSave }) {
   useEffect(() => {
     if (initialData) {
       setFormData({
+        id: initialData.id || "",
         acesso: initialData.acesso || "",
         empresa: initialData.empresa || "",
         usuario: initialData.usuario || "",
