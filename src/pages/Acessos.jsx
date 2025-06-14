@@ -79,10 +79,11 @@ function Acessos() {
   // Remove o campo id do corpo da requisição
   const { id, ...formDataSemId } = formData;
 
-  const payload = {
-    ...formDataSemId,
-    atualizado_por: getNomeUsuarioLogado()
-  };
+ const payload = {
+  ...formDataSemId,
+  atualizado_por: getNomeUsuarioLogado(),
+  id: formData.id  // ✅ aqui está a correção final
+};
 
   // Exibe o ID que foi originalmente recebido no formData
   console.log("ID enviado:", formData.id);
