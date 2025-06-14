@@ -82,7 +82,7 @@ function Acessos() {
  const payload = {
   ...formDataSemId,
   atualizado_por: getNomeUsuarioLogado(),
-  id: formData.id  // ✅ aqui está a correção final
+  
 };
 
   // Exibe o ID que foi originalmente recebido no formData
