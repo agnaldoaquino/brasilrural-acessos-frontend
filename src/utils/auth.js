@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
 
 export function getNomeUsuarioLogado() {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("access_token");
   if (!token) {
     console.log("Token não encontrado.");
     return null;
