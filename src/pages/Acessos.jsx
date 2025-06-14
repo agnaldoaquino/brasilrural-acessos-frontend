@@ -76,8 +76,11 @@ function Acessos() {
     return;
   }
 
+  // Remove o campo id do corpo da requisição
+  const { id, ...formDataSemId } = formData;
+
   const payload = {
-    ...formData,
+    ...formDataSemId,
     atualizado_por: getNomeUsuarioLogado()
   };
 
