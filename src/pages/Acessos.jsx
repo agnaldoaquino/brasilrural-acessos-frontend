@@ -84,6 +84,12 @@ function Acessos() {
     atualizado_por: getNomeUsuarioLogado()
   };
 
+  // Exibe o ID que foi originalmente recebido no formData
+  console.log("ID enviado:", formData.id);
+
+  // Exibe o conteúdo final do payload que será enviado na requisição PUT
+  console.log("Payload enviado:", payload);
+
   api
     .put(`/acessos/${selectedAcesso.id}`, payload)
     .then(() => {
@@ -92,7 +98,7 @@ function Acessos() {
       fetchAcessos(true);
     })
     .catch((err) => {
-      console.error(err);
+      console.error("Erro no PUT:", err.response?.data || err.message || err);
       toast.error("Erro ao atualizar acesso.");
     });
 };
