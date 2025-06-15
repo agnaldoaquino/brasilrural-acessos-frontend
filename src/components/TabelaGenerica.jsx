@@ -37,6 +37,25 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick, onDeleteA
 
   return (
     <div className="overflow-x-auto bg-white rounded shadow mt-4">
+      <div className="flex justify-end items-center gap-2 p-2">
+        <button
+          type="button"
+          onClick={onRefreshClick}
+          title="Recarregar acessos"
+          className="p-1 rounded text-gray-700 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
+        >
+          <FiRefreshCw className="w-4 h-4" />
+        </button>
+        <button
+          type="button"
+          onClick={onDeleteAllClick}
+          title="Excluir todos"
+          className="p-1 rounded text-red-600 hover:text-red-800 hover:bg-red-100 cursor-pointer"
+        >
+          <FaTrash className="w-4 h-4" />
+        </button>
+      </div>
+
       <table className="w-full text-left border-collapse">
         <thead className="bg-gray-200">
           <tr>
@@ -59,24 +78,7 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick, onDeleteA
 
             {renderAcoes && (
               <th className="p-3 border text-gray-700 font-bold uppercase tracking-wider text-xs">
-                <div className="flex justify-end items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={onRefreshClick}
-                    title="Recarregar acessos"
-                    className="p-1 rounded text-gray-700 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
-                  >
-                    <FiRefreshCw className="w-4 h-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={onDeleteAllClick}
-                    title="Excluir todos"
-                    className="p-1 rounded text-red-600 hover:text-red-800 hover:bg-red-100 cursor-pointer"
-                  >
-                    <FaTrash className="w-4 h-4" />
-                  </button>
-                </div>
+                Ações
               </th>
             )}
           </tr>
