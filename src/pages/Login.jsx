@@ -59,7 +59,7 @@ function Login({ onLogin }) {
           <img
             src="/Logo-Brasil-Rural-v2.png"
             alt="Brasil Rural"
-            className="w-24 h-24 rounded-full shadow"
+            className="h-32 mx-auto rounded-full shadow"
           />
         </div>
         <h2 className="text-center text-xl font-semibold text-gray-800 mb-4">
