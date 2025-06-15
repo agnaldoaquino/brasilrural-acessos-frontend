@@ -68,17 +68,28 @@ const TabelaGenerica = ({
 
             {renderAcoes && (
               <th className="p-3 border text-gray-700 font-bold uppercase tracking-wider text-xs">
-                <div className="flex justify-between items-center">
-                  <span>Ações</span>
-                  <button
-                    type="button"
-                    onClick={onRefreshClick}
-                    title="Recarregar acessos"
-                    className="p-1 rounded text-gray-700 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
-                  >
-                    <FiRefreshCw className="w-4 h-4" />
-                  </button>
-                </div>
+                <div className="flex items-center justify-between space-x-2">
+  <span>Ações</span>
+  <div className="flex items-center space-x-2">
+    <button
+      type="button"
+      onClick={onAddClick}
+      title="Adicionar novo acesso"
+      className="p-1 rounded text-green-600 hover:text-green-800 hover:bg-green-100 cursor-pointer"
+    >
+      <HiOutlinePlus className="w-4 h-4" />
+    </button>
+    <button
+      type="button"
+      onClick={onRefreshClick}
+      title="Recarregar acessos"
+      className="p-1 rounded text-gray-700 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
+    >
+      <FiRefreshCw className="w-4 h-4" />
+    </button>
+  </div>
+</div>
+
               </th>
             )}
           </tr>
@@ -105,13 +116,7 @@ const TabelaGenerica = ({
                       >
                         <HiOutlinePencil />
                       </button>
-                      <button
-                        onClick={() => onAddClick(item)}
-                        className="text-green-600 hover:text-green-800"
-                        title="Adicionar acesso"
-                      >
-                        <HiOutlinePlus />
-                      </button>
+                      
                     </div>
                     <div className="pr-2">
                       <button
