@@ -3,7 +3,7 @@ import { FiRefreshCw } from "react-icons/fi";
 import { FaTrash } from "react-icons/fa";
 
 
-const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
+const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick, onDeleteAllClick }) => {
   const [ordenarPor, setOrdenarPor] = useState("");
   const [ordemAscendente, setOrdemAscendente] = useState(true);
 
@@ -37,7 +37,19 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
 
   return (
     <div className="overflow-x-auto bg-white rounded shadow mt-4">
-      <table className="w-full text-left border-collapse">
+      <div className="flex justify-end pr-2 pt-1">
+  {onDeleteAllClick && (
+    <button
+      type="button"
+      onClick={onDeleteAllClick}
+      title="Excluir todos"
+      className="p-1 text-red-600 hover:text-red-800 hover:bg-red-100 rounded"
+    >
+      <FaTrash className="w-4 h-4" />
+    </button>
+  )}
+</div>
+<table className="w-full text-left border-collapse">
         <thead className="bg-gray-200">
           <tr>
             {colunas.map((coluna) => (
@@ -59,9 +71,8 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
 
             {renderAcoes && (
   <th className="p-3 border text-gray-700 font-bold uppercase tracking-wider text-xs">
-  <div className="flex justify-between items-center w-full">
-  <span>Ações</span>
-  <div className="flex gap-2">
+  <div className="flex justify-between items-center">
+    <span>Ações</span>
     <button
       type="button"
       onClick={onRefreshClick}
@@ -70,16 +81,7 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
     >
       <FiRefreshCw className="w-4 h-4" />
     </button>
-    <button
-      type="button"
-      onClick={() => alert('Excluir tudo em breve')}
-      title="Excluir todos"
-      className="p-1 rounded text-red-600 hover:text-red-800 hover:bg-red-100 cursor-pointer"
-    >
-      <FaTrash className="w-4 h-4" />
-    </button>
   </div>
-</div>
 </th>
 )}
           </tr>

@@ -157,6 +157,12 @@ function Acessos() {
 },
   ];
 
+  const handleDeleteAll = () => {
+    if (window.confirm("Tem certeza que deseja excluir todos os acessos?")) {
+      toast.info("Função excluir todos ainda não implementada.");
+    }
+  };
+
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
       <div className="flex items-center mb-6">
@@ -187,6 +193,7 @@ function Acessos() {
   colunas={colunas}
   dados={filtrarAcessos()}
   onRefreshClick={() => fetchAcessos(true)}
+  onDeleteAllClick={handleDeleteAll}
   renderAcoes={(acesso) => (
     <div className="flex space-x-2">
       <button
