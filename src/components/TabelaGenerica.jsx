@@ -1,8 +1,9 @@
+
 import React, { useState } from "react";
 import { FiRefreshCw } from "react-icons/fi";
+import { FaTrash } from "react-icons/fa";
 
-
-const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
+const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick, onDeleteAllClick }) => {
   const [ordenarPor, setOrdenarPor] = useState("");
   const [ordemAscendente, setOrdemAscendente] = useState(true);
 
@@ -49,7 +50,7 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
                   {coluna.titulo}
                   {ordenarPor === coluna.campo && (
                     <span className="ml-1">
-                      {ordemAscendente ? "\u2191" : "\u2193"}
+                      {ordemAscendente ? "↑" : "↓"}
                     </span>
                   )}
                 </div>
@@ -57,39 +58,27 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
             ))}
 
             {renderAcoes && (
-  <th className="p-3 border text-gray-700 font-bold uppercase tracking-wider text-xs">
-  <div className="flex justify-between items-center">
-    <span>Ações</span>
-    <div className="flex gap-2">
-      <button
-        type="button"
-        onClick={onRefreshClick}
-        title="Recarregar acessos"
-        className="p-1 rounded text-gray-700 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
-      >
-        <FiRefreshCw className="w-4 h-4" />
-      </button>
-      <button
-        type="button"
-        onClick={onDeleteAllClick}
-        title="Excluir todos os acessos"
-        className="p-1 rounded text-red-600 hover:text-red-800 hover:bg-red-100 cursor-pointer"
-      >
-        <FaTrash className="w-4 h-4" />
-      </button>
-    </div>
-    <span>Ações</span>
-    <button
-      type="button"
-      onClick={onRefreshClick}
-      title="Recarregar acessos"
-      className="p-1 rounded text-gray-700 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
-    >
-      <FiRefreshCw className="w-4 h-4" />
-    </button>
-  </div>
-</th>
-)}
+              <th className="p-3 border text-gray-700 font-bold uppercase tracking-wider text-xs">
+                <div className="flex justify-end items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={onRefreshClick}
+                    title="Recarregar acessos"
+                    className="p-1 rounded text-gray-700 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
+                  >
+                    <FiRefreshCw className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={onDeleteAllClick}
+                    title="Excluir todos"
+                    className="p-1 rounded text-red-600 hover:text-red-800 hover:bg-red-100 cursor-pointer"
+                  >
+                    <FaTrash className="w-4 h-4" />
+                  </button>
+                </div>
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -102,7 +91,6 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
                     : item[coluna.campo]}
                 </td>
               ))}
-
               {renderAcoes && (
                 <td className="p-3 border whitespace-nowrap">
                   {renderAcoes(item)}
