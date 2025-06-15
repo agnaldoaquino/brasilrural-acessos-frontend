@@ -79,16 +79,22 @@ function Acessos() {
   // Remove o campo id do corpo da requisição
   const { id, ...formDataSemId } = formData;
 
- const payload = {
-  ...formDataSemId,
-  atualizado_por: getNomeUsuarioLogado(),
-  
-};
+  // Verifica se algum campo foi realmente alterado
+  const camposEnviados = Object.entries(formDataSemId).filter(
+    ([_, valor]) => valor !== "" && valor !== null && valor !== undefined
+  );
 
-  // Exibe o ID que foi originalmente recebido no formData
+  if (camposEnviados.length === 0) {
+    toast.warning("Nenhuma informação foi alterada.");
+    return;
+  }
+
+  const payload = {
+    ...formDataSemId,
+    atualizado_por: getNomeUsuarioLogado(),
+  };
+
   console.log("ID enviado:", formData.id);
-
-  // Exibe o conteúdo final do payload que será enviado na requisição PUT
   console.log("Payload enviado:", payload);
 
   api
