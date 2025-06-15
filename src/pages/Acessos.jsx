@@ -106,9 +106,11 @@ function Acessos() {
       const servicoMatch = servicoFiltro ? item.servico === servicoFiltro : true;
       const empresaMatch = empresaFiltro ? item.empresa === empresaFiltro : true;
       const buscaMatch = busca
-        ? item.usuario?.toLowerCase().includes(busca.toLowerCase()) ||
+        ? item.acesso?.toLowerCase().includes(busca.toLowerCase()) ||
+          item.usuario?.toLowerCase().includes(busca.toLowerCase()) ||
           item.servico?.toLowerCase().includes(busca.toLowerCase()) ||
-          item.empresa?.toLowerCase().includes(busca.toLowerCase())
+          item.empresa?.toLowerCase().includes(busca.toLowerCase()) ||
+          item.url?.toLowerCase().includes(busca.toLowerCase())
         : true;
 
       return servicoMatch && empresaMatch && buscaMatch;
