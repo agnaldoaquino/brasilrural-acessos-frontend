@@ -10,7 +10,6 @@ import SenhaCell from "../components/SenhaCell";
 import EditarAcessoModal from "../components/EditarAcessoModal";
 import { getNomeUsuarioLogado } from "../utils/auth.js";
 
-
 function Acessos() {
   const [acessos, setAcessos] = useState([]);
   const [servicoFiltro, setServicoFiltro] = useState("");
@@ -21,49 +20,72 @@ function Acessos() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAcesso, setSelectedAcesso] = useState(null);
 
-  // Funções de ação da tabela
+  const handleEditClick = (acesso) => {
+    setSelectedAcesso(acesso);
+    setIsModalOpen(true);
+  };
 
-const handleEditClick = (acesso) => {
-  setSelectedAcesso(acesso);
-  setIsModalOpen(true);
-};
+  const handleAddClick = () => {
+    setSelectedAcesso(null);
+    setIsModalOpen(true);
+  };
 
-const handleAddClick = () => {
-  setSelectedAcesso(null);
-  setIsModalOpen(true);
-};
+  const handleDeleteClick = async (id) => {
+    const confirm = window.confirm("Deseja realmente excluir este acesso?");
+    if (!confirm) return;
 
-const handleDeleteClick = async (id) => {
-  const confirm = window.confirm("Deseja realmente excluir este acesso?");
-  if (!confirm) return;
+    try {
+      const token = localStorage.getItem("token");
+      await api.delete(`/acessos/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success("Acesso excluído com sucesso");
+      fetchAcessos();
+    } catch (error) {
+      console.error("Erro ao excluir:", error);
+      toast.error("Erro ao excluir o acesso");
+    }
+  };
 
-  try {
+  const handleSaveAcesso = (formData) => {
     const token = localStorage.getItem("token");
-    await api.delete(`/acessos/${id}`, {
+
+    const payload = {
+      ...formData,
+      atualizado_por: getNomeUsuarioLogado(),
+    };
+
+    const isEdicao = !!formData.id;
+    const url = isEdicao ? `/acessos/${formData.id}` : "/acessos";
+    const metodo = isEdicao ? api.put : api.post;
+
+    metodo(url, payload, {
       headers: { Authorization: `Bearer ${token}` },
-    });
-    toast.success("Acesso excluído com sucesso");
-    fetchAcessos();
-  } catch (error) {
-    console.error("Erro ao excluir:", error);
-    toast.error("Erro ao excluir o acesso");
-  }
-};
+    })
+      .then(() => {
+        toast.success(`Acesso ${isEdicao ? "atualizado" : "criado"} com sucesso.`);
+        handleCloseModal();
+        fetchAcessos(true);
+      })
+      .catch((err) => {
+        console.error("Erro ao salvar:", err.response?.data || err.message || err);
+        toast.error("Erro ao salvar acesso.");
+      });
+  };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedAcesso(null);
+  };
 
-  // Buscar acessos
   const fetchAcessos = (exibirToast = false) => {
     setLoading(true);
 
     api
       .get("/acessos")
       .then((response) => {
-        console.log("Acessos recebidos:", response.data);
         setAcessos(response.data);
-
-        if (exibirToast) {
-          toast.success("Acessos carregados com sucesso.");
-        }
+        if (exibirToast) toast.success("Acessos carregados com sucesso.");
       })
       .catch((err) => {
         console.error(err);
@@ -77,73 +99,6 @@ const handleDeleteClick = async (id) => {
   useEffect(() => {
     fetchAcessos(); // não exibe toast na carga inicial
   }, []);
-
-  // Deletar acesso
-  const handleDelete = (id) => {
-    if (!window.confirm("Tem certeza que deseja excluir este acesso?")) return;
-
-    api
-      .delete(`/acessos/${id}`)
-      .then(() => {
-        toast.success("Acesso excluído com sucesso.");
-        fetchAcessos();
-      })
-      .catch((err) => {
-        console.error(err);
-        toast.error("Erro ao excluir acesso.");
-      });
-  };
-
-  // Editar acesso
-  const handleEdit = (acesso) => {
-    setSelectedAcesso(acesso);
-    setIsModalOpen(true);
-  };
-
-  const handleSaveAcesso = (formData) => {
-  if (!selectedAcesso?.id) {
-    toast.error("ID do acesso não encontrado.");
-    return;
-  }
-
-  // Remove o campo id do corpo da requisição
-  const { id, ...formDataSemId } = formData;
-
-  // Verifica se algum campo foi realmente alterado
-  const camposEnviados = Object.entries(formDataSemId).filter(
-    ([_, valor]) => valor !== "" && valor !== null && valor !== undefined
-  );
-
-  if (camposEnviados.length === 0) {
-    toast.warning("Nenhuma informação foi alterada.");
-    return;
-  }
-
-  const payload = {
-    ...formDataSemId,
-    atualizado_por: getNomeUsuarioLogado(),
-  };
-
-  console.log("ID enviado:", formData.id);
-  console.log("Payload enviado:", payload);
-
-  api
-    .put(`/acessos/${selectedAcesso.id}`, payload)
-    .then(() => {
-      toast.success("Acesso atualizado com sucesso.");
-      handleCloseModal();
-      fetchAcessos(true);
-    })
-    .catch((err) => {
-      console.error("Erro no PUT:", err.response?.data || err.message || err);
-      toast.error("Erro ao atualizar acesso.");
-    });
-};
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedAcesso(null);
-  };
 
   const filtrarAcessos = () => {
     return acessos.filter((item) => {
@@ -164,27 +119,27 @@ const handleDeleteClick = async (id) => {
     { titulo: "Empresa", campo: "empresa" },
     { titulo: "Usuário", campo: "usuario" },
     {
-  titulo: "Senha",
-  campo: "senha",
-  render: (valor) => <SenhaCell senha={valor} />,
-},
+      titulo: "Senha",
+      campo: "senha",
+      render: (valor) => <SenhaCell senha={valor} />,
+    },
     {
-  titulo: "URL",
-  campo: "url",
-  render: (valor) =>
-    valor ? (
-      <a
-        href={valor}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-blue-600 hover:underline"
-      >
-        {valor}
-      </a>
-    ) : (
-      "-"
-    ),
-},
+      titulo: "URL",
+      campo: "url",
+      render: (valor) =>
+        valor ? (
+          <a
+            href={valor}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
+          >
+            {valor}
+          </a>
+        ) : (
+          "-"
+        ),
+    },
   ];
 
   return (
@@ -214,36 +169,37 @@ const handleDeleteClick = async (id) => {
         </div>
       ) : (
         <TabelaGenerica
-  colunas={colunas}
-  dados={filtrarAcessos()}
-  onRefreshClick={() => fetchAcessos(true)}
-  renderAcoes={(acesso) => (
-    <div className="flex space-x-2">
-      <button
-        onClick={() => handleEdit(acesso)}
-        className="text-blue-600 hover:text-blue-800"
-        title="Editar acesso"
-      >
-        <HiOutlinePencil />
-      </button>
-      <button
-        onClick={() => handleDelete(acesso.id)}
-        className="text-red-600 hover:text-red-800"
-        title="Excluir acesso"
-      >
-        <FaTrash />
-      </button>
-    </div>
-  )}
-/>
+          colunas={colunas}
+          dados={filtrarAcessos()}
+          onRefreshClick={() => fetchAcessos(true)}
+          onAddClick={handleAddClick}
+          renderAcoes={(acesso) => (
+            <div className="flex space-x-2">
+              <button
+                onClick={() => handleEditClick(acesso)}
+                className="text-blue-600 hover:text-blue-800"
+                title="Editar acesso"
+              >
+                <HiOutlinePencil />
+              </button>
+              <button
+                onClick={() => handleDeleteClick(acesso.id)}
+                className="text-red-600 hover:text-red-800"
+                title="Excluir acesso"
+              >
+                <FaTrash />
+              </button>
+            </div>
+          )}
+        />
       )}
 
       <EditarAcessoModal
-  isOpen={isModalOpen}
-  onClose={handleCloseModal}
-  initialData={selectedAcesso}
-  onSave={handleSaveAcesso}
-/>
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        initialData={selectedAcesso}
+        onSave={handleSaveAcesso}
+      />
     </div>
   );
 }
