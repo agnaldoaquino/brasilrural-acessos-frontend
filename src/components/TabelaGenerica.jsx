@@ -86,7 +86,7 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
 
               {renderAcoes && (
                 <td className="p-3 border whitespace-nowrap">
-                  <div className="flex justify-end pr-2">
+                  <div className="flex justify-between items-center px-2 w-full">
                     {renderAcoes(item)}
                   </div>
                 </td>
