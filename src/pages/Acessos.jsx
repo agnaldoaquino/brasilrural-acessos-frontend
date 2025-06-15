@@ -21,6 +21,7 @@ function Acessos() {
   const [selectedAcesso, setSelectedAcesso] = useState(null);
 
   const handleEditClick = (acesso) => {
+    console.log("EDITANDO:", acesso);
     setSelectedAcesso(acesso);
     setIsModalOpen(true);
   };
