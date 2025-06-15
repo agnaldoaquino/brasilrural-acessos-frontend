@@ -2,9 +2,17 @@ import React, { useState } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 import { HiOutlinePencil } from "react-icons/hi";
 import { FaTrash } from "react-icons/fa";
+import { HiOutlinePlus } from "react-icons/hi";
 
-
-const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
+const TabelaGenerica = ({
+  colunas,
+  dados,
+  renderAcoes,
+  onRefreshClick,
+  onEditClick = () => {},
+  onDeleteClick = () => {},
+  onAddClick = () => {},
+}) => {
   const [ordenarPor, setOrdenarPor] = useState("");
   const [ordemAscendente, setOrdemAscendente] = useState(true);
 
@@ -59,20 +67,20 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
             ))}
 
             {renderAcoes && (
-  <th className="p-3 border text-gray-700 font-bold uppercase tracking-wider text-xs">
-  <div className="flex justify-between items-center">
-    <span>Ações</span>
-    <button
-      type="button"
-      onClick={onRefreshClick}
-      title="Recarregar acessos"
-      className="p-1 rounded text-gray-700 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
-    >
-      <FiRefreshCw className="w-4 h-4" />
-    </button>
-  </div>
-</th>
-)}
+              <th className="p-3 border text-gray-700 font-bold uppercase tracking-wider text-xs">
+                <div className="flex justify-between items-center">
+                  <span>Ações</span>
+                  <button
+                    type="button"
+                    onClick={onRefreshClick}
+                    title="Recarregar acessos"
+                    className="p-1 rounded text-gray-700 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
+                  >
+                    <FiRefreshCw className="w-4 h-4" />
+                  </button>
+                </div>
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -88,27 +96,34 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
 
               {renderAcoes && (
                 <td className="p-3 border whitespace-nowrap">
-  <div className="flex justify-between items-center w-full">
-    <div className="pl-2">
-      <button
-        onClick={() => onEditClick(item)}
-        className="text-blue-600 hover:text-blue-800"
-        title="Editar acesso"
-      >
-        <HiOutlinePencil />
-      </button>
-    </div>
-    <div className="pr-2">
-      <button
-        onClick={() => onDeleteClick(item.id)}
-        className="text-red-600 hover:text-red-800 translate-x-1"
-        title="Excluir acesso"
-      >
-        <FaTrash />
-      </button>
-    </div>
-  </div>
-</td>
+                  <div className="flex justify-between items-center w-full">
+                    <div className="pl-2 flex items-center space-x-3">
+                      <button
+                        onClick={() => onEditClick(item)}
+                        className="text-blue-600 hover:text-blue-800"
+                        title="Editar acesso"
+                      >
+                        <HiOutlinePencil />
+                      </button>
+                      <button
+                        onClick={() => onAddClick(item)}
+                        className="text-green-600 hover:text-green-800"
+                        title="Adicionar acesso"
+                      >
+                        <HiOutlinePlus />
+                      </button>
+                    </div>
+                    <div className="pr-2">
+                      <button
+                        onClick={() => onDeleteClick(item.id)}
+                        className="text-red-600 hover:text-red-800 translate-x-1"
+                        title="Excluir acesso"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  </div>
+                </td>
               )}
             </tr>
           ))}
