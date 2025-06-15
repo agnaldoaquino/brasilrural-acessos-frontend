@@ -21,6 +21,36 @@ function Acessos() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAcesso, setSelectedAcesso] = useState(null);
 
+  // Funções de ação da tabela
+
+const handleEditClick = (acesso) => {
+  setSelectedAcesso(acesso);
+  setIsModalOpen(true);
+};
+
+const handleAddClick = () => {
+  setSelectedAcesso(null);
+  setIsModalOpen(true);
+};
+
+const handleDeleteClick = async (id) => {
+  const confirm = window.confirm("Deseja realmente excluir este acesso?");
+  if (!confirm) return;
+
+  try {
+    const token = localStorage.getItem("token");
+    await api.delete(`/acessos/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    toast.success("Acesso excluído com sucesso");
+    fetchAcessos();
+  } catch (error) {
+    console.error("Erro ao excluir:", error);
+    toast.error("Erro ao excluir o acesso");
+  }
+};
+
+
   // Buscar acessos
   const fetchAcessos = (exibirToast = false) => {
     setLoading(true);
