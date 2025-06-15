@@ -96,7 +96,11 @@ const TabelaGenerica = ({
         </thead>
         <tbody>
           {dadosOrdenados.map((item, index) => (
-            <tr key={index} className="hover:bg-gray-100">
+            <tr
+  key={index}
+  className="hover:bg-gray-100 cursor-pointer"
+  onDoubleClick={() => onEditClick(item)}
+>
               {colunas.map((coluna) => (
                 <td key={coluna.campo} className="p-3 border whitespace-nowrap">
                   {coluna.render
