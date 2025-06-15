@@ -176,6 +176,7 @@ function Acessos() {
           dados={filtrarAcessos()}
           onRefreshClick={() => fetchAcessos(true)}
           onAddClick={handleAddClick}
+          onEditClick={handleEditClick}
           renderAcoes={(acesso) => (
             <div className="flex space-x-2">
               <button
