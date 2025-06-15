@@ -106,30 +106,10 @@ const TabelaGenerica = ({
               ))}
 
               {renderAcoes && (
-                <td className="p-3 border whitespace-nowrap">
-                  <div className="flex justify-between items-center w-full">
-                    <div className="pl-2 flex items-center space-x-3">
-                      <button
-                        onClick={() => onEditClick(item)}
-                        className="text-blue-600 hover:text-blue-800"
-                        title="Editar acesso"
-                      >
-                        <HiOutlinePencil />
-                      </button>
-                      
-                    </div>
-                    <div className="pr-2">
-                      <button
-                        onClick={() => onDeleteClick(item.id)}
-                        className="text-red-600 hover:text-red-800 translate-x-1"
-                        title="Excluir acesso"
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
-                  </div>
-                </td>
-              )}
+  <td className="p-3 border whitespace-nowrap">
+    {renderAcoes(item)}
+  </td>
+)}
             </tr>
           ))}
 
