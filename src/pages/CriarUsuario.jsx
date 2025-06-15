@@ -45,7 +45,7 @@ function CriarUsuario() {
         <img
           src="/Logo-Brasil-Rural-v2.png"
           alt="Brasil Rural Logo"
-          className="h-12 mr-4"
+          className="h-24 mr-4"
         />
         <h1 className="text-3xl font-bold">Criar Usuário</h1>
       </div>
