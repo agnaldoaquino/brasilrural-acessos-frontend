@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FiRefreshCw } from "react-icons/fi";
+import { FaTrash } from "react-icons/fa";
 
 
 const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
@@ -58,8 +59,9 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
 
             {renderAcoes && (
   <th className="p-3 border text-gray-700 font-bold uppercase tracking-wider text-xs">
-  <div className="flex justify-between items-center">
-    <span>Ações</span>
+  <div className="flex justify-between items-center w-full">
+  <span>Ações</span>
+  <div className="flex gap-2">
     <button
       type="button"
       onClick={onRefreshClick}
@@ -68,7 +70,16 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
     >
       <FiRefreshCw className="w-4 h-4" />
     </button>
+    <button
+      type="button"
+      onClick={() => alert('Excluir tudo em breve')}
+      title="Excluir todos"
+      className="p-1 rounded text-red-600 hover:text-red-800 hover:bg-red-100 cursor-pointer"
+    >
+      <FaTrash className="w-4 h-4" />
+    </button>
   </div>
+</div>
 </th>
 )}
           </tr>
