@@ -20,7 +20,7 @@ const Usuarios = ({ token }) => {
       const response = await api.get("/usuarios");
       console.log("Usuários recebidos:", response.data);
       setUsuarios(response.data);
-      toast.success("Usuários carregados com sucesso.");
+      // toast.success("Usuários carregados com sucesso.");
     } catch (error) {
       console.error("Erro ao buscar usuários:", error);
       toast.error("Falha ao buscar usuários.");
