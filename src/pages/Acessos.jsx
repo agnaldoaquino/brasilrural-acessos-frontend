@@ -66,7 +66,7 @@ function Acessos() {
       .then(() => {
         toast.success(`Acesso ${isEdicao ? "atualizado" : "criado"} com sucesso.`);
         handleCloseModal();
-        fetchAcessos(true);
+        fetchAcessos(false);
       })
       .catch((err) => {
         console.error("Erro ao salvar:", err.response?.data || err.message || err);
