@@ -101,7 +101,7 @@ const TabelaGenerica = ({ colunas, dados, renderAcoes, onRefreshClick }) => {
     <div className="pr-2">
       <button
         onClick={() => onDeleteClick(item.id)}
-        className="text-red-600 hover:text-red-800"
+        className="text-red-600 hover:text-red-800 translate-x-1"
         title="Excluir acesso"
       >
         <FaTrash />
