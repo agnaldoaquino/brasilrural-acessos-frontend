@@ -9,6 +9,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import SenhaCell from "../components/SenhaCell";
 import EditarAcessoModal from "../components/EditarAcessoModal";
 import { getNomeUsuarioLogado } from "../utils/auth.js";
+import UrlCell from "../components/UrlCell";
 
 function Acessos() {
   const [acessos, setAcessos] = useState([]);
@@ -127,22 +128,10 @@ function Acessos() {
       render: (valor) => <SenhaCell senha={valor} />,
     },
     {
-      titulo: "URL",
-      campo: "url",
-      render: (valor) =>
-        valor ? (
-          <a
-            href={valor}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:underline"
-          >
-            {valor}
-          </a>
-        ) : (
-          "-"
-        ),
-    },
+  titulo: "URL",
+  campo: "url",
+  render: (valor) => <UrlCell url={valor} />,
+},
   ];
 
   return (
