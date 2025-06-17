@@ -163,15 +163,23 @@ function Acessos() {
         <h1 className="text-3xl font-bold">Acessos</h1>
       </div>
 
-      <FiltroAcessos
-        acessos={acessos}
-        acessoFiltro={acessoFiltro}
-        setAcessoFiltro={setAcessoFiltro}
-        empresaFiltro={empresaFiltro}
-        setEmpresaFiltro={setEmpresaFiltro}
-        busca={busca}
-        setBusca={setBusca}
-      />
+      <div className="flex flex-wrap items-center justify-between mb-4">
+  <FiltroAcessos
+    acessos={acessos}
+    acessoFiltro={acessoFiltro}
+    setAcessoFiltro={setAcessoFiltro}
+    empresaFiltro={empresaFiltro}
+    setEmpresaFiltro={setEmpresaFiltro}
+    busca={busca}
+    setBusca={setBusca}
+  />
+  <button
+    onClick={handleAddClick}
+    className="ml-4 mt-2 sm:mt-0 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center"
+  >
+    <span className="text-xl mr-2">+</span> Adicionar
+  </button>
+</div>
 
       {loading ? (
         <div className="text-center text-blue-600 font-semibold mb-4">
