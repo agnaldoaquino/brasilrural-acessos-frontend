@@ -64,3 +64,12 @@ export async function buscarHistoricoEmail(emailId) {
   }
 }
 
+export async function atualizarEmailCorporativo(emailId, dadosAtualizados) {
+  try {
+    const resposta = await api.put(`/emails/${emailId}`, dadosAtualizados);
+    return resposta.data;
+  } catch (erro) {
+    console.error("Erro ao atualizar e-mail:", erro);
+    throw erro;
+  }
+}
