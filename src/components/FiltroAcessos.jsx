@@ -1,7 +1,7 @@
 function FiltroAcessos({
   acessos,
   acessoFiltro,
-  setacessoFiltro,
+  setAcessoFiltro,
   empresaFiltro,
   setEmpresaFiltro,
   busca,
@@ -11,7 +11,7 @@ function FiltroAcessos({
     <div className="flex flex-wrap gap-4 mb-6">
       <select
         value={acessoFiltro}
-        onChange={(e) => setacessoFiltro(e.target.value)}
+        onChange={(e) => setAcessoFiltro(e.target.value)}
         className="p-2 border rounded"
       >
         <option value="">Acesso</option>
