@@ -1,7 +1,7 @@
 function FiltroAcessos({
   acessos,
-  servicoFiltro,
-  setServicoFiltro,
+  acessoFiltro,
+  setacessoFiltro,
   empresaFiltro,
   setEmpresaFiltro,
   busca,
@@ -10,16 +10,16 @@ function FiltroAcessos({
   return (
     <div className="flex flex-wrap gap-4 mb-6">
       <select
-        value={servicoFiltro}
-        onChange={(e) => setServicoFiltro(e.target.value)}
+        value={acessoFiltro}
+        onChange={(e) => setacessoFiltro(e.target.value)}
         className="p-2 border rounded"
       >
-        <option value="">Serviço</option>
-        {[...new Set(acessos.map((a) => a.servico))]
+        <option value="">Acesso</option>
+        {[...new Set(acessos.map((a) => a.acesso))]
           .filter((s) => s)
-          .map((servico) => (
-            <option key={servico} value={servico}>
-              {servico}
+          .map((acesso) => (
+            <option key={acesso} value={acesso}>
+              {acesso}
             </option>
           ))}
       </select>
