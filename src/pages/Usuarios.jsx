@@ -111,7 +111,7 @@ const Usuarios = ({ token }) => {
         placeholder="Buscar nome ou email"
         value={searchTerm}
         onChange={handleSearch}
-        className="px-3 py-2 mb-[6px] w-full max-w-md border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-500"
+        className="px-3 py-2 mb-[0px] w-full max-w-md border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-500"
       />
 
       {loading ? (
