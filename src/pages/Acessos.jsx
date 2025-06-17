@@ -10,6 +10,7 @@ import SenhaCell from "../components/SenhaCell";
 import EditarAcessoModal from "../components/EditarAcessoModal";
 import { getNomeUsuarioLogado } from "../utils/auth.js";
 import UrlCell from "../components/UrlCell";
+import { FiCopy } from "react-icons/fi";
 
 function Acessos() {
   const [acessos, setAcessos] = useState([]);
@@ -134,7 +135,7 @@ function Acessos() {
         title="Copiar usuário"
         className="p-1 rounded text-gray-500 hover:text-gray-700 hover:bg-gray-100"
       >
-        📋
+        <FiCopy className="w-4 h-4" />
       </button>
     </div>
   ),
