@@ -125,8 +125,8 @@ function Acessos() {
   titulo: "Usuário",
   campo: "usuario",
   render: (valor) => (
-    <div className="flex items-center justify-between gap-2">
-      <span className="truncate max-w-[260px]">{valor}</span>
+    <div className="flex items-center justify-between gap-2 max-w-[260px]">
+      <span className="truncate">{valor}</span>
       <button
         onClick={() => {
           navigator.clipboard.writeText(valor);

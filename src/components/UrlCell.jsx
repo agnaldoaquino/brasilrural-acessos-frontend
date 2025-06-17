@@ -4,12 +4,12 @@ const UrlCell = ({ url }) => {
   if (!url) return "-";
 
   return (
-    <div className="flex items-center w-full">
+    <div className="max-w-[180px] truncate">
       <a
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex-1 text-blue-600 hover:underline truncate"
+        className="text-blue-600 hover:underline block"
       >
         {url}
       </a>
