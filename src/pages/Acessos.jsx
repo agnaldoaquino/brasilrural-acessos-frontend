@@ -125,7 +125,7 @@ function Acessos() {
   titulo: "Usuário",
   campo: "usuario",
   render: (valor) => (
-    <div className="flex items-center justify-between gap-2 max-w-[240px]">
+    <div className="flex items-center justify-between gap-2 max-w-[260px]">
       <span className="truncate">{valor}</span>
       <button
         onClick={() => {
