@@ -13,7 +13,7 @@ import UrlCell from "../components/UrlCell";
 
 function Acessos() {
   const [acessos, setAcessos] = useState([]);
-  const [servicoFiltro, setServicoFiltro] = useState("");
+  const [acessoFiltro, setAcessoFiltro] = useState("");
   const [empresaFiltro, setEmpresaFiltro] = useState("");
   const [busca, setBusca] = useState("");
   const [loading, setLoading] = useState(false);
@@ -104,17 +104,16 @@ function Acessos() {
 
   const filtrarAcessos = () => {
     return acessos.filter((item) => {
-      const servicoMatch = servicoFiltro ? item.servico === servicoFiltro : true;
+      const acessoMatch = acessoFiltro ? item.acesso === acessoFiltro : true;
       const empresaMatch = empresaFiltro ? item.empresa === empresaFiltro : true;
       const buscaMatch = busca
         ? item.acesso?.toLowerCase().includes(busca.toLowerCase()) ||
           item.usuario?.toLowerCase().includes(busca.toLowerCase()) ||
-          item.servico?.toLowerCase().includes(busca.toLowerCase()) ||
           item.empresa?.toLowerCase().includes(busca.toLowerCase()) ||
           item.url?.toLowerCase().includes(busca.toLowerCase())
         : true;
 
-      return servicoMatch && empresaMatch && buscaMatch;
+      return acessoMatch && empresaMatch && buscaMatch;
     });
   };
 
@@ -147,8 +146,8 @@ function Acessos() {
 
       <FiltroAcessos
         acessos={acessos}
-        servicoFiltro={servicoFiltro}
-        setServicoFiltro={setServicoFiltro}
+        acessoFiltro={acessoFiltro}
+        setAcessoFiltro={setAcessoFiltro}
         empresaFiltro={empresaFiltro}
         setEmpresaFiltro={setEmpresaFiltro}
         busca={busca}
