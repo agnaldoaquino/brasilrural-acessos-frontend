@@ -79,14 +79,7 @@ const TabelaGenerica = ({
 >
   <FiRefreshCw className="w-4 h-4" />
 </button>
-    <button
-      type="button"
-      onClick={onRefreshClick}
-      title="Recarregar acessos"
-      className="p-1 rounded text-gray-700 hover:text-gray-900 hover:bg-gray-200 cursor-pointer"
-    >
-      <FiRefreshCw className="w-4 h-4" />
-    </button>
+    
   </div>
 </div>
 
