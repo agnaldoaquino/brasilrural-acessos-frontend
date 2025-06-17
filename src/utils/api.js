@@ -73,3 +73,13 @@ export async function atualizarEmailCorporativo(emailId, dadosAtualizados) {
     throw erro;
   }
 }
+
+export async function criarEmailCorporativo(novoEmail) {
+  try {
+    const resposta = await api.post("/emails", novoEmail);
+    return resposta.data;
+  } catch (erro) {
+    console.error("Erro ao criar e-mail:", erro);
+    throw erro;
+  }
+}
