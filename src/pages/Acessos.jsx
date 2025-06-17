@@ -165,16 +165,16 @@ function Acessos() {
 
       <div className="flex items-end justify-between mb-4 gap-4 flex-wrap">
   <div className="flex-1 min-w-[300px]">
-    <FiltroAcessos
-      acessos={acessos}
-      acessoFiltro={acessoFiltro}
-      setAcessoFiltro={setAcessoFiltro}
-      empresaFiltro={empresaFiltro}
-      setEmpresaFiltro={setEmpresaFiltro}
-      busca={busca}
-      setBusca={setBusca}
-    />
-  </div>
+  <FiltroAcessos
+    acessos={acessos}
+    acessoFiltro={acessoFiltro}
+    setAcessoFiltro={setAcessoFiltro}
+    empresaFiltro={empresaFiltro}
+    setEmpresaFiltro={setEmpresaFiltro}
+    busca={busca}
+    setBusca={setBusca}
+  />
+</div>
   <button
   onClick={handleAddClick}
   className="px-4 py-[9px] bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center"
