@@ -1,10 +1,9 @@
 // components/UrlCell.jsx
-
 const UrlCell = ({ url }) => {
   if (!url) return "-";
 
   return (
-    <div className="max-w-[180px] truncate">
+    <div className="max-w-[220px] truncate">
       <a
         href={url}
         target="_blank"

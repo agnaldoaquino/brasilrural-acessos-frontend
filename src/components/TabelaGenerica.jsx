@@ -67,7 +67,7 @@ const TabelaGenerica = ({
             ))}
 
             {renderAcoes && (
-              <th className="p-3 border text-gray-700 font-bold uppercase tracking-wider text-xs">
+              <th className="p-2 w-[80px] border text-gray-700 font-bold uppercase tracking-wider text-xs">
                 <div className="flex items-center justify-between space-x-2">
   <span>Ações</span>
   <div className="flex items-center space-x-2">

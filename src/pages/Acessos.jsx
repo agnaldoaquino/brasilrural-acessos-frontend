@@ -125,15 +125,15 @@ function Acessos() {
   titulo: "Usuário",
   campo: "usuario",
   render: (valor) => (
-    <div className="flex items-center justify-between gap-2 max-w-[260px]">
-      <span className="truncate">{valor}</span>
+    <div className="relative max-w-[200px] pr-6">
+      <span className="truncate block">{valor}</span>
       <button
         onClick={() => {
           navigator.clipboard.writeText(valor);
           toast.success("Usuário copiado!");
         }}
         title="Copiar usuário"
-        className="p-1 rounded text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+        className="absolute top-1/2 right-0 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded"
       >
         <FiCopy className="w-4 h-4" />
       </button>
