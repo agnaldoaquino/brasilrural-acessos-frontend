@@ -83,3 +83,13 @@ export async function criarEmailCorporativo(novoEmail) {
     throw erro;
   }
 }
+
+export async function buscarEmailsCorporativos() {
+  try {
+    const resposta = await api.get("/emails");
+    return resposta.data;
+  } catch (erro) {
+    console.error("Erro ao buscar e-mails:", erro);
+    throw erro;
+  }
+}
