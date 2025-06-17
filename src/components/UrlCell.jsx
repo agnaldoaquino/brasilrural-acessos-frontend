@@ -16,7 +16,7 @@ const UrlCell = ({ url }) => {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-blue-600 hover:underline truncate max-w-[200px]"
+      className="flex-1 text-blue-600 hover:underline truncate"
     >
       {url}
     </a>
