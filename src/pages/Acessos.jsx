@@ -163,7 +163,7 @@ function Acessos() {
         <h1 className="text-3xl font-bold">Acessos</h1>
       </div>
 
-      <div className="flex items-center justify-between mb-4 gap-4 flex-wrap">
+      <div className="flex items-end justify-between mb-4 gap-4 flex-wrap">
   <div className="flex-1 min-w-[300px]">
     <FiltroAcessos
       acessos={acessos}
