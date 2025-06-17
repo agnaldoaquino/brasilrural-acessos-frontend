@@ -11,7 +11,7 @@ const UrlCell = ({ url }) => {
   if (!url) return "-";
 
  return (
-  <div className="flex justify-between items-center w-full">
+  <div className="flex items-center w-full">
     <a
       href={url}
       target="_blank"
