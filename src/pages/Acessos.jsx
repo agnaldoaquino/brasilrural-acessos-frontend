@@ -4,7 +4,7 @@ import FiltroAcessos from "../components/FiltroAcessos";
 import TabelaGenerica from "../components/TabelaGenerica";
 import { toast } from "react-toastify";
 import { FaTrash } from "react-icons/fa";
-import { HiOutlinePencil } from "react-icons/hi";
+import { FiEdit } from "react-icons/fi";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import SenhaCell from "../components/SenhaCell";
 import EditarAcessoModal from "../components/EditarAcessoModal";
@@ -167,13 +167,13 @@ function Acessos() {
           onAddClick={handleAddClick}
           onEditClick={handleEditClick}
           renderAcoes={(acesso) => (
-            <div className="flex space-x-2">
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => handleEditClick(acesso)}
                 className="text-blue-600 hover:text-blue-800"
                 title="Editar acesso"
               >
-                <HiOutlinePencil />
+                <FiEdit className="w-4 h-4" />
               </button>
               <button
                 onClick={() => handleDeleteClick(acesso.id)}
