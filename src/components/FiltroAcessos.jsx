@@ -8,7 +8,7 @@ function FiltroAcessos({
   setBusca,
 }) {
   return (
-    <div className="flex flex-wrap gap-4 mb-6">
+    <div className="flex flex-wrap items-end gap-4 w-full">
       <select
         value={acessoFiltro}
         onChange={(e) => setAcessoFiltro(e.target.value)}
