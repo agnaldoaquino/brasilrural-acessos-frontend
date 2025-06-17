@@ -3,11 +3,6 @@ import { FiCopy } from "react-icons/fi";
 import { toast } from "react-toastify";
 
 const UrlCell = ({ url }) => {
-  const copiarParaAreaDeTransferencia = () => {
-    navigator.clipboard.writeText(url);
-    toast.success("URL copiada para a área de transferência.");
-  };
-
   if (!url) return "-";
 
  return (

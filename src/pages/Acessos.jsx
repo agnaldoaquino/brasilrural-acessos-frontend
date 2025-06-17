@@ -120,7 +120,25 @@ function Acessos() {
   const colunas = [
     { titulo: "Acesso", campo: "acesso" },
     { titulo: "Empresa", campo: "empresa" },
-    { titulo: "Usuário", campo: "usuario" },
+    {
+  titulo: "Usuário",
+  campo: "usuario",
+  render: (valor) => (
+    <div className="flex items-center justify-between gap-2">
+      <span className="truncate max-w-[160px]">{valor}</span>
+      <button
+        onClick={() => {
+          navigator.clipboard.writeText(valor);
+          toast.success("Usuário copiado!");
+        }}
+        title="Copiar usuário"
+        className="p-1 rounded text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+      >
+        📋
+      </button>
+    </div>
+  ),
+},
     {
       titulo: "Senha",
       campo: "senha",
