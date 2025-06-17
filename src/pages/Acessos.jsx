@@ -163,7 +163,7 @@ function Acessos() {
         <h1 className="text-3xl font-bold">Acessos</h1>
       </div>
 
-      <div className="self-end px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center">
+      <div className="flex items-end justify-between mb-4 gap-4 flex-wrap">
   <div className="flex-1 min-w-[300px]">
     <FiltroAcessos
       acessos={acessos}
@@ -176,11 +176,11 @@ function Acessos() {
     />
   </div>
   <button
-    onClick={handleAddClick}
-    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center"
-  >
-    <span className="text-xl mr-2">+</span> Adicionar
-  </button>
+  onClick={handleAddClick}
+  className="mt-[6px] h-[42px] px-4 bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center"
+>
+  <span className="text-xl mr-2">+</span> Adicionar
+</button>
 </div>
 
       {loading ? (
