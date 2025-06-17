@@ -153,33 +153,8 @@ function Acessos() {
   ];
 
   return (
-    <div className="p-8 bg-gray-100 min-h-screen">
-      <div className="flex items-center mb-6">
-        <img
-          src="/Logo-Brasil-Rural-v2.png"
-          alt="Brasil Rural Logo"
-          className="h-24 mr-4"
-        />
-        <h1 className="text-3xl font-bold">Acessos</h1>
-      </div>
+        <div className="p-8 bg-gray-100 min-h-screen">
 
-      <div className="flex flex-wrap items-center justify-between mb-4">
-  <FiltroAcessos
-    acessos={acessos}
-    acessoFiltro={acessoFiltro}
-    setAcessoFiltro={setAcessoFiltro}
-    empresaFiltro={empresaFiltro}
-    setEmpresaFiltro={setEmpresaFiltro}
-    busca={busca}
-    setBusca={setBusca}
-  />
-  <button
-    onClick={handleAddClick}
-    className="ml-4 mt-2 sm:mt-0 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center"
-  >
-    <span className="text-xl mr-2">+</span> Adicionar
-  </button>
-</div>
 
       {loading ? (
         <div className="text-center text-blue-600 font-semibold mb-4">
