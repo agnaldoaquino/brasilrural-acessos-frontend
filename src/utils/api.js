@@ -43,3 +43,24 @@ api.interceptors.request.use(
 );
 
 export default api;
+
+export async function buscarHistoricoEmail(emailId) {
+  try {
+    const resposta = await fetch(`${import.meta.env.VITE_API_URL}/historico-emails/${emailId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (!resposta.ok) {
+      throw new Error("Erro ao buscar histórico do e-mail.");
+    }
+
+    const dados = await resposta.json();
+    return dados;
+  } catch (erro) {
+    console.error("Erro na função buscarHistoricoEmail:", erro);
+    throw erro;
+  }
+}
+

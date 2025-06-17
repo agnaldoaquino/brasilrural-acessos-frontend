@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { MdListAlt, MdPersonAdd, MdPeople, MdLogout, MdMenu } from "react-icons/md";
 import { toast } from "react-toastify";
+import { MdEmail } from "react-icons/md";
 
 const Sidebar = ({ isCollapsed, toggleSidebar, setToken }) => {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar, setToken }) => {
     { path: "/", label: "Acessos", icon: <MdListAlt size={24} /> },
     { path: "/criar-usuario", label: "Criar Usuário", icon: <MdPersonAdd size={24} /> },
     { path: "/usuarios", label: "Usuários", icon: <MdPeople size={24} /> },
+    { path: "/emails", label: "E-mails", icon: <MdEmail size={24} /> },
   ];
 
   return (

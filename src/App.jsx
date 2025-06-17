@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import CriarUsuario from "./pages/CriarUsuario";
 import Acessos from "./pages/Acessos";
 import Usuarios from "./pages/Usuarios";
+import Emails from "./pages/Emails";
+
 
 import Sidebar from "./components/Sidebar";
 
@@ -87,6 +89,7 @@ function AppContent({ token, setToken }) {
           <Route path="/" element={<Acessos token={token} />} />
           <Route path="/criar-usuario" element={<CriarUsuario token={token} />} />
           <Route path="/usuarios" element={<Usuarios token={token} />} />
+          <Route path="/emails" element={<Emails token={token} />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
 
