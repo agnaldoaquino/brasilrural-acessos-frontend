@@ -164,7 +164,7 @@ function Acessos() {
       </div>
 
       <div className="flex items-end justify-between mb-4 gap-4 flex-wrap">
-  <div className="flex-1 min-w-[300px]">
+  <div className="flex flex-col justify-end flex-1 min-w-[300px]">
   <FiltroAcessos
     acessos={acessos}
     acessoFiltro={acessoFiltro}
