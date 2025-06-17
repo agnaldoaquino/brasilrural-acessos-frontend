@@ -1,5 +1,5 @@
 // components/UrlCell.jsx
-import { FaRegCopy } from "react-icons/fa";
+import { FiCopy } from "react-icons/fi";
 import { toast } from "react-toastify";
 
 const UrlCell = ({ url }) => {
@@ -10,25 +10,25 @@ const UrlCell = ({ url }) => {
 
   if (!url) return "-";
 
-  return (
-    <div className="flex items-center space-x-2 max-w-[240px]">
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-blue-600 hover:underline truncate"
-      >
-        {url}
-      </a>
-      <button
-        onClick={copiarParaAreaDeTransferencia}
-        title="Copiar URL"
-        className="text-gray-500 hover:text-gray-700"
-      >
-        <FaRegCopy />
-      </button>
-    </div>
-  );
+ return (
+  <div className="flex justify-between items-center w-full">
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-blue-600 hover:underline truncate max-w-[200px]"
+    >
+      {url}
+    </a>
+    <button
+      onClick={copiarParaAreaDeTransferencia}
+      title="Copiar URL"
+      className="p-1 rounded text-gray-700 hover:text-gray-900 hover:bg-gray-200 cursor-pointer ml-2"
+    >
+      <FiCopy className="w-4 h-4" />
+    </button>
+  </div>
+);
 };
 
 export default UrlCell;
