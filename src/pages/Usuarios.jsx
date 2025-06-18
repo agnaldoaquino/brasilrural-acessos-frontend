@@ -97,7 +97,7 @@ const Usuarios = ({ token }) => {
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
-      <div className="flex items-center mb-6">
+      <div className="flex items-center mb-5">
         <img
           src="/Logo-Brasil-Rural-v2.png"
           alt="Brasil Rural Logo"
