@@ -13,7 +13,7 @@ const EditarUsuarioModal = ({ isOpen, onClose, onSave, initialData = {} }) => {
     setPassword("");
     setCriaUsuario(initialData.cria_usuario || false);
   }
-}, [initialData]);
+}, [isOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
