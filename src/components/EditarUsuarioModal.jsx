@@ -7,13 +7,13 @@ const EditarUsuarioModal = ({ isOpen, onClose, onSave, initialData = {} }) => {
   const [criaUsuario, setCriaUsuario] = useState(false);
 
   useEffect(() => {
-    if (initialData) {
-      setUsername(initialData.username || "");
-      setEmail(initialData.email || "");
-      setPassword(""); // nunca pré-carrega senha
-      setCriaUsuario(initialData.cria_usuario || false);
-    }
-  }, [initialData]);
+  if (initialData) {
+    setUsername(initialData.username || "");
+    setEmail(initialData.email || "");
+    setPassword("");
+    setCriaUsuario(initialData.cria_usuario || false);
+  }
+}, [initialData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
