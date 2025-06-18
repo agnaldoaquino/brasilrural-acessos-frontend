@@ -1,54 +1,34 @@
-import { useState, useEffect } from "react";
+// src/pages/Usuarios.jsx
+import React, { useState, useEffect } from "react";
 import api from "../utils/api";
-import { toast } from "react-toastify";
 import TabelaGenerica from "../components/TabelaGenerica";
-import { FaEye, FaEyeSlash, FaTrash } from "react-icons/fa";
 import EditarUsuarioModal from "../components/EditarUsuarioModal";
+import { toast } from "react-toastify";
+import { FaTrash } from "react-icons/fa";
+import { FiEdit } from "react-icons/fi";
 
-
-const Usuarios = ({ token }) => {
+const Usuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [showPasswordIds, setShowPasswordIds] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [usuarioSelecionado, setUsuarioSelecionado] = useState(null);
+  const [filtro, setFiltro] = useState("");
+
+  const fetchUsuarios = async () => {
+    try {
+      const response = await api.get("/usuarios");
+      setUsuarios(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar usuários:", error);
+      toast.error("Erro ao carregar usuários.");
+    }
+  };
 
   useEffect(() => {
     fetchUsuarios();
-  }, [token]);
-
-  const fetchUsuarios = async () => {
-    setLoading(true);
-    try {
-      const response = await api.get("/usuarios");
-      console.log("Usuários recebidos:", response.data);
-      setUsuarios(response.data);
-      // toast.success("Usuários carregados com sucesso.");
-    } catch (error) {
-      console.error("Erro ao buscar usuários:", error);
-      toast.error("Falha ao buscar usuários.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleTogglePassword = (id) => {
-    setShowPasswordIds((prev) =>
-      prev.includes(id)
-        ? prev.filter((item) => item !== id)
-        : [...prev, id]
-    );
-  };
+  }, []);
 
   const handleDeleteUsuario = async (id) => {
-    if (!window.confirm("Tem certeza que deseja excluir este usuário?")) {
-      return;
-    }
-
+    if (!window.confirm("Tem certeza que deseja excluir este usuário?")) return;
     try {
       await api.delete(`/usuarios/${id}`);
       toast.success("Usuário excluído com sucesso.");
@@ -59,101 +39,72 @@ const Usuarios = ({ token }) => {
     }
   };
 
-  const handleSaveUsuario = async (novoUsuario) => {
-  try {
-    await api.post("/criar_usuario", novoUsuario);
-    toast.success("Usuário criado com sucesso.");
-    setShowModal(false);
-    fetchUsuarios();
-  } catch (error) {
-    console.error("Erro ao criar usuário:", error);
-    toast.error("Erro ao criar usuário.");
-  }
-};
+  const handleEditUsuario = (usuario) => {
+    setUsuarioSelecionado(usuario);
+    setShowModal(true);
+  };
 
+  const handleSaveUsuario = async (usuario) => {
+    try {
+      const { id, password, ...restante } = usuario;
+      const dados = password ? usuario : restante;
+      const metodo = id ? api.put : api.post;
+      const url = id ? `/usuarios/${id}` : "/criar_usuario";
 
-  const filteredUsuarios = usuarios.filter(
-    (usuario) =>
-      usuario.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      usuario.email?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+      await metodo(url, dados);
+      toast.success(`Usuário ${id ? "atualizado" : "criado"} com sucesso.`);
+      setShowModal(false);
+      setUsuarioSelecionado(null);
+      fetchUsuarios();
+    } catch (err) {
+      console.error("Erro ao salvar usuário:", err);
+      toast.error("Erro ao salvar usuário.");
+    }
+  };
 
   const colunas = [
-    { titulo: "Nome do usuário", campo: "username" },
-    { titulo: "E-mail", campo: "email" },
-    {
-      titulo: "Senha",
-      campo: "password",
-      render: (value, usuario) =>
-        showPasswordIds.includes(usuario.id) ? (
-          <>
-            {value}{" "}
-            <FaEyeSlash
-              className="inline ml-2 cursor-pointer text-gray-500"
-              onClick={() => handleTogglePassword(usuario.id)}
-            />
-          </>
-        ) : (
-          <>
-            {"••••••"}{" "}
-            <FaEye
-              className="inline ml-2 cursor-pointer text-gray-500"
-              onClick={() => handleTogglePassword(usuario.id)}
-            />
-          </>
-        ),
-    },
-    {
-      titulo: "Cria Usuários",
-      campo: "cria_usuario",
-      render: (value) => (value ? "Sim" : "Não"),
-    },
-    { titulo: "Data de Criação", campo: "created_at" },
+    { campo: "username", rotulo: "Usuário" },
+    { campo: "email", rotulo: "E-mail" },
+    { campo: "cria_usuario", rotulo: "Pode criar usuários?" },
   ];
 
+  const filteredUsuarios = usuarios.filter((usuario) =>
+    usuario.username.toLowerCase().includes(filtro.toLowerCase())
+  );
+
   return (
-    <div className="p-8 bg-gray-100 min-h-screen">
-      <div className="flex items-center mb-5">
-        <img
-          src="/Logo-Brasil-Rural-v2.png"
-          alt="Brasil Rural Logo"
-          className="h-24 mr-4"
+    <div className="p-4">
+      <div className="flex justify-between mb-4">
+        <input
+          type="text"
+          placeholder="Buscar usuário..."
+          className="border p-2 rounded w-64"
+          value={filtro}
+          onChange={(e) => setFiltro(e.target.value)}
         />
-        <h1 className="text-3xl font-bold">Gestão de Usuários</h1>
+        <button
+          onClick={() => {
+            setUsuarioSelecionado(null);
+            setShowModal(true);
+          }}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+        >
+          Adicionar
+        </button>
       </div>
 
-      <div className="flex items-end justify-between mb-4 gap-4 flex-wrap">
-        
-  <input
-    type="text"
-    placeholder="Buscar nome ou email"
-    value={searchTerm}
-    onChange={handleSearch}
-    className="px-3 py-2 mb-0 w-full max-w-md border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-500"
-  />
-
-  <button
-    onClick={() => setShowModal(true)}
-    className="px-4 py-[7px] bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center"
-  >
-    <span className="text-xl mr-2">+</span> Adicionar
-  </button>
-  <EditarUsuarioModal
-  isOpen={showModal}
-  onClose={() => setShowModal(false)}
-  onSave={handleSaveUsuario}
-/>
-</div>
-
-      {loading ? (
-        <div className="text-center text-blue-600 font-semibold mb-4">
-          Carregando usuários...
-        </div>
-      ) : (
-        <TabelaGenerica
-          colunas={colunas}
-          dados={filteredUsuarios}
-          renderAcoes={(usuario) => (
+      <TabelaGenerica
+        colunas={colunas}
+        dados={filteredUsuarios}
+        renderAcoes={(usuario) => (
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => handleEditUsuario(usuario)}
+              className="text-blue-600 hover:text-blue-800"
+              title="Editar usuário"
+            >
+              <FiEdit className="w-4 h-4" />
+            </button>
             <button
               onClick={() => handleDeleteUsuario(usuario.id)}
               className="text-red-600 hover:text-red-800"
@@ -161,9 +112,19 @@ const Usuarios = ({ token }) => {
             >
               <FaTrash />
             </button>
-          )}
-        />
-      )}
+          </div>
+        )}
+      />
+
+      <EditarUsuarioModal
+        isOpen={showModal}
+        onClose={() => {
+          setShowModal(false);
+          setUsuarioSelecionado(null);
+        }}
+        onSave={handleSaveUsuario}
+        initialData={usuarioSelecionado}
+      />
     </div>
   );
 };
