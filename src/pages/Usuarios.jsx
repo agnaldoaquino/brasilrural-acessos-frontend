@@ -45,22 +45,27 @@ const Usuarios = () => {
   };
 
   const handleSaveUsuario = async (usuario) => {
-    try {
-      const { id, password, ...restante } = usuario;
-      const dados = password ? usuario : restante;
-      const metodo = id ? api.put : api.post;
-      const url = id ? `/usuarios/${id}` : "/criar_usuario";
+  try {
+    const { id, ...restante } = usuario;
 
-      await metodo(url, dados);
-      toast.success(`Usuário ${id ? "atualizado" : "criado"} com sucesso.`);
-      setShowModal(false);
-      setUsuarioSelecionado(null);
-      fetchUsuarios();
-    } catch (err) {
-      console.error("Erro ao salvar usuário:", err);
-      toast.error("Erro ao salvar usuário.");
-    }
-  };
+    // remove campos vazios
+    const dados = Object.fromEntries(
+      Object.entries(restante).filter(([_, v]) => v !== "")
+    );
+
+    const metodo = id ? api.put : api.post;
+    const url = id ? `/usuarios/${id}` : "/criar_usuario";
+
+    await metodo(url, dados);
+    toast.success(`Usuário ${id ? "atualizado" : "criado"} com sucesso.`);
+    setShowModal(false);
+    setUsuarioSelecionado(null);
+    fetchUsuarios();
+  } catch (err) {
+    console.error("Erro ao salvar usuário:", err);
+    toast.error("Erro ao salvar usuário.");
+  }
+};
 
   const colunas = [
     { campo: "username", rotulo: "Usuário" },
