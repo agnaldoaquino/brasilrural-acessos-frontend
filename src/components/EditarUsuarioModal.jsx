@@ -90,12 +90,22 @@ const EditarUsuarioModal = ({ isOpen, onClose, onSave, initialData = {} }) => {
             <label className="text-sm">Pode criar outros usuários</label>
           </div>
 
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-          >
-            Salvar
-          </button>
+          <div className="flex justify-between mt-6">
+  <button
+    type="button"
+    onClick={onClose}
+    className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300"
+  >
+    Fechar
+  </button>
+
+  <button
+    type="submit"
+    className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+  >
+    Salvar
+  </button>
+</div>
         </form>
       </div>
     </div>
