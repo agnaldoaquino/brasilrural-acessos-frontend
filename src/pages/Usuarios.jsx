@@ -3,12 +3,15 @@ import api from "../utils/api";
 import { toast } from "react-toastify";
 import TabelaGenerica from "../components/TabelaGenerica";
 import { FaEye, FaEyeSlash, FaTrash } from "react-icons/fa";
+import EditarUsuarioModal from "../components/EditarUsuarioModal";
+
 
 const Usuarios = ({ token }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPasswordIds, setShowPasswordIds] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetchUsuarios();
@@ -55,6 +58,19 @@ const Usuarios = ({ token }) => {
       toast.error("Erro ao excluir usuário.");
     }
   };
+
+  const handleSaveUsuario = async (novoUsuario) => {
+  try {
+    await api.post("/criar_usuario", novoUsuario);
+    toast.success("Usuário criado com sucesso.");
+    setShowModal(false);
+    fetchUsuarios();
+  } catch (error) {
+    console.error("Erro ao criar usuário:", error);
+    toast.error("Erro ao criar usuário.");
+  }
+};
+
 
   const filteredUsuarios = usuarios.filter(
     (usuario) =>
@@ -106,13 +122,28 @@ const Usuarios = ({ token }) => {
         <h1 className="text-3xl font-bold">Gestão de Usuários</h1>
       </div>
 
-      <input
-        type="text"
-        placeholder="Buscar nome ou email"
-        value={searchTerm}
-        onChange={handleSearch}
-        className="px-3 py-2 mb-[0px] w-full max-w-md border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-500"
-      />
+      <div className="flex items-end justify-between mb-4 gap-4 flex-wrap">
+        
+  <input
+    type="text"
+    placeholder="Buscar nome ou email"
+    value={searchTerm}
+    onChange={handleSearch}
+    className="px-3 py-2 mb-0 w-full max-w-md border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-500"
+  />
+
+  <button
+    onClick={() => setShowModal(true)}
+    className="px-4 py-[7px] bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center"
+  >
+    <span className="text-xl mr-2">+</span> Adicionar
+  </button>
+  <EditarUsuarioModal
+  isOpen={showModal}
+  onClose={() => setShowModal(false)}
+  onSave={handleSaveUsuario}
+/>
+</div>
 
       {loading ? (
         <div className="text-center text-blue-600 font-semibold mb-4">
