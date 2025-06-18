@@ -23,7 +23,6 @@ const Sidebar = ({ isCollapsed, toggleSidebar, setToken }) => {
 
   const menuItems = [
     { path: "/", label: "Acessos", icon: <MdListAlt size={24} /> },
-    { path: "/criar-usuario", label: "Criar Usuário", icon: <MdPersonAdd size={24} /> },
     { path: "/usuarios", label: "Usuários", icon: <MdPeople size={24} /> },
     { path: "/emails", label: "E-mails", icon: <MdEmail size={24} /> },
   ];
