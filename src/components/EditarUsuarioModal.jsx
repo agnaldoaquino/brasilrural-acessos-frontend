@@ -90,7 +90,7 @@ const EditarUsuarioModal = ({ isOpen, onClose, onSave, initialData = {} }) => {
             <label className="text-sm">Pode criar outros usuários</label>
           </div>
 
-          <div className="flex justify-between mt-6">
+          <div className="flex justify-end mt-6 space-x-3">
   <button
     type="button"
     onClick={onClose}
